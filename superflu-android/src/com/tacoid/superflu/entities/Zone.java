@@ -7,10 +7,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
- * Cette classe répresente une zone. Cette zone contient une liste de villes.
+ * Cette classe represente une zone. Cette zone contient une liste de villes.
  */
 public class Zone {
-	
+
 	private int id;
 	private String nom;
 	private ArrayList<Ville> villes = new ArrayList<Ville>();
@@ -53,7 +53,8 @@ public class Zone {
 		String filepath = "ressources/zones/zone" + id + ".data";
 
 		try {
-			BufferedReader buff = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(filepath)));
+			BufferedReader buff = new BufferedReader(new InputStreamReader(
+					getClass().getClassLoader().getResourceAsStream(filepath)));
 			String line;
 
 			nom = buff.readLine();
@@ -64,21 +65,27 @@ public class Zone {
 				if (tab.length == 3) {
 					tab[0] = tab[0].replace('_', ' ');
 					if (usine == null) {
-						usine = new Usine(this, tab[0], Integer.valueOf(tab[1]), Integer.valueOf(tab[2]));
+						usine = new Usine(this, tab[0],
+								Integer.valueOf(tab[1]),
+								Integer.valueOf(tab[2]));
 					} else {
-						Ville ville = new Ville(this, tab[0], Integer.valueOf(tab[1]), Integer.valueOf(tab[2]));
+						Ville ville = new Ville(this, tab[0],
+								Integer.valueOf(tab[1]),
+								Integer.valueOf(tab[2]));
 						villes.add(ville);
 					}
 				} else {
-					System.err.println("Erreur lecture " + filepath + "continue quand même...");
+					System.err.println("Erreur lecture " + filepath
+							+ "continue quand mï¿½me...");
 				}
 			}
 
 			buff.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("Fichier " + filepath + " introuvable ! Aucune ville chargée pour cette zone.");
+			System.err.println("Fichier " + filepath
+					+ " introuvable ! Aucune ville chargï¿½e pour cette zone.");
 		} catch (IOException e) {
-			System.err.println("Erreur à la lecture de " + filepath + ".");
+			System.err.println("Erreur ï¿½ la lecture de " + filepath + ".");
 		}
 	}
 

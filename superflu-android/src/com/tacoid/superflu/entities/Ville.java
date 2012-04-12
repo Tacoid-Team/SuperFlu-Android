@@ -15,7 +15,7 @@ public class Ville {
 
 	private int stockVaccins = 0;
 	private int stockVaccinsMax = 500000;
-	
+
 	private int stockTraitements = 0;
 	private int stockTraitementsMax = 100000;
 
@@ -33,7 +33,8 @@ public class Ville {
 	}
 
 	public static int distance_carre_sens1(Ville depart, Ville arrivee) {
-		return (arrivee.x - depart.x) * (arrivee.x - depart.x) + (arrivee.y - depart.y) * (arrivee.y - depart.y);
+		return (arrivee.x - depart.x) * (arrivee.x - depart.x)
+				+ (arrivee.y - depart.y) * (arrivee.y - depart.y);
 	}
 
 	public static int distance_carre_sens2(Ville depart, Ville arrivee) {
@@ -46,7 +47,8 @@ public class Ville {
 			arrivee_x = arrivee.getX() + 1024;
 		}
 
-		return (arrivee_x - depart_x) * (arrivee_x - depart_x) + (arrivee.y - depart.y) * (arrivee.y - depart.y);
+		return (arrivee_x - depart_x) * (arrivee_x - depart_x)
+				+ (arrivee.y - depart.y) * (arrivee.y - depart.y);
 	}
 
 	public static int distance_carre(Ville depart, Ville arrivee) {
@@ -63,7 +65,7 @@ public class Ville {
 	}
 
 	public void retireStockVaccin(int quantite) {
-		stockVaccins = Math.max(stockVaccins-quantite,0);
+		stockVaccins = Math.max(stockVaccins - quantite, 0);
 	}
 
 	public void ajouteStockTraitement(int quantite) {
@@ -74,7 +76,7 @@ public class Ville {
 	}
 
 	public void retireStockTraitement(int quantite) {
-		stockTraitements = Math.max(stockTraitements-quantite,0);
+		stockTraitements = Math.max(stockTraitements - quantite, 0);
 	}
 
 	public String getNom() {
@@ -129,7 +131,7 @@ public class Ville {
 	}
 
 	public int getPourcentageInfectes() {
-		return (int)(100 * ((float)habitantsInfectes / getHabitants()));
+		return (int) (100 * ((float) habitantsInfectes / getHabitants()));
 	}
 
 	public boolean isMine(Joueur joueur) {
@@ -146,7 +148,7 @@ public class Ville {
 	}
 
 	/**
-	 * Mise à jour des données de la ville.
+	 * Mise Ã  jour des donnÃ©es de la ville.
 	 */
 	public void update() {
 		float transmission = 0.015f;
@@ -156,7 +158,7 @@ public class Ville {
 		if (getHabitants() > 0) {
 
 			// Infection :
-			float nouveauxHabitantsInfectes = (habitantsInfectes * transmission * ((float)habitantsSains / getHabitants()));
+			float nouveauxHabitantsInfectes = (habitantsInfectes * transmission * ((float) habitantsSains / getHabitants()));
 			if (nouveauxHabitantsInfectes > 0) {
 				habitantsSains -= nouveauxHabitantsInfectes;
 				habitantsInfectes += nouveauxHabitantsInfectes;
@@ -179,16 +181,17 @@ public class Ville {
 				habitantsInfectes = 0;
 			}
 
-			// Perte immunité :
+			// Perte immunitï¿½ :
 			habitantsImmunises -= (int) (habitantsImmunises * perteImmunite);
 
 			// Utilisation des vaccins (sur les personnes saines) :
-			int nouveauxHabitantsImmunises = Math.min(habitantsSains, stockVaccins);
+			int nouveauxHabitantsImmunises = Math.min(habitantsSains,
+					stockVaccins);
 			retireStockVaccin(nouveauxHabitantsImmunises);
 			habitantsSains -= nouveauxHabitantsImmunises;
 			habitantsImmunises += nouveauxHabitantsImmunises;
 
-			// Mortalité :
+			// Mortalitï¿½ :
 			float nouveauxHabitantsMorts = habitantsInfectes * mortalite;
 			if (nouveauxHabitantsMorts > 1) {
 				habitantsInfectes -= nouveauxHabitantsMorts;
@@ -212,9 +215,8 @@ public class Ville {
 	}
 
 	public boolean isOnCity(int x, int y) {
-		return (x-this.x)*(x-this.x)+(y-this.y)*(y-this.y) < 500;
+		return (x - this.x) * (x - this.x) + (y - this.y) * (y - this.y) < 500;
 	}
-
 
 	public int getStockVaccins() {
 		return stockVaccins;
@@ -230,9 +232,8 @@ public class Ville {
 
 	@Override
 	public String toString() {
-		return nom+":\n"
-		+"-Sains = "+this.habitantsSains+"\n"
-		+"-Malades ="+this.habitantsInfectes+"\n"
-		+"-Morts = "+this.habitantsMorts+"\n";
+		return nom + ":\n" + "-Sains = " + this.habitantsSains + "\n"
+				+ "-Malades =" + this.habitantsInfectes + "\n" + "-Morts = "
+				+ this.habitantsMorts + "\n";
 	}
 }

@@ -1,6 +1,6 @@
 package com.tacoid.superflu.entities;
 
-public class Usine extends Ville{
+public class Usine extends Ville {
 
 	private int productionRateVaccins = 2;
 	private int productionRateTraitements = 10;
@@ -10,8 +10,10 @@ public class Usine extends Ville{
 		this.retireHabitantsSains(this.getHabitantsSains());
 	}
 
-	public void produit(int populationInfectee) {
-		productionRateTraitements = (int) (5 + 0.2 * Math.sqrt(populationInfectee));
+	private void produit(int populationInfectee) {
+		//XXX: Récupérer la population infectée sans le passer en argument.
+		productionRateTraitements = (int) (5 + 0.2 * Math
+				.sqrt(populationInfectee));
 		productionRateVaccins = (int) (Math.sqrt(populationInfectee));
 
 		ajouteStockTraitement(productionRateTraitements);
@@ -24,5 +26,10 @@ public class Usine extends Ville{
 
 	public void setProductionRate(int productionRateVaccins) {
 		this.productionRateVaccins = productionRateVaccins;
+	}
+	
+	public void update() {
+		super.update();
+		produit(0); //XXX: populationInfectee.
 	}
 }

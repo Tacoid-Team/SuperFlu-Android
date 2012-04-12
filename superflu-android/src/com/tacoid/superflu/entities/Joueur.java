@@ -4,7 +4,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Joueur{
+public class Joueur {
 
 	private List<Zone> zones = new ArrayList<Zone>();
 	private int score;

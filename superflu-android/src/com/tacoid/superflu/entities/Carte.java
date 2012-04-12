@@ -1,4 +1,5 @@
 package com.tacoid.superflu.entities;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -10,12 +11,11 @@ public class Carte {
 	private static int courbe_vaccines[] = null;
 	private static int dephasage_courbes;
 
-
 	@Override
 	public String toString() {
 		return "Carte [courbe_infectes=" + Arrays.toString(courbe_infectes)
 				+ ", courbe_morts=" + Arrays.toString(courbe_morts)
-				/*+ ", courbe_pop=" + Arrays.toString(courbe_pop)*/
+				/* + ", courbe_pop=" + Arrays.toString(courbe_pop) */
 				+ ", courbe_vaccines=" + Arrays.toString(courbe_vaccines)
 				+ ", dephasage_courbes=" + dephasage_courbes + "]";
 	}
@@ -35,8 +35,8 @@ public class Carte {
 		courbe_vaccines = new int[longueur_courbe];
 		dephasage_courbes = 0;
 
-		for(int i=0 ; i<longueur_courbe ; i++) {
-			/*courbe_pop[i] = 0;*/
+		for (int i = 0; i < longueur_courbe; i++) {
+			/* courbe_pop[i] = 0; */
 			courbe_morts[i] = 0;
 			courbe_infectes[i] = 0;
 			courbe_vaccines[i] = 0;

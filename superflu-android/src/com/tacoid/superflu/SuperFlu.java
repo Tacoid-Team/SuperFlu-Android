@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class SuperFlu implements ApplicationListener, InputProcessor {
 	private static final int VIRTUAL_WIDTH = 1024;
@@ -21,14 +23,27 @@ public class SuperFlu implements ApplicationListener, InputProcessor {
 
 	private SpriteBatch spriteBatch;
 	private Texture backgroundTexture;
+	private TextureRegion villeTextureRegion;
 	private TextureRegion backgroundTextureRegion;
 	private Sprite spriteAvion;
+	private Stage stage;
 	private int x = 0;
 	private int y = 0;
 
 	@Override
 	public void create() {
 		camera = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		
+		stage = new Stage(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true);
+		villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/ville.png")), 24, 24);
+		Image img = new Image(villeTextureRegion);
+		img.x = 100;
+		img.y = 100;
+		img.width = 24;
+		img.height = 24;
+		img.originX = 0;
+		img.originY = 0;
+		stage.addActor(img);
 
 		Gdx.input.setInputProcessor(this);
 
@@ -97,6 +112,8 @@ public class SuperFlu implements ApplicationListener, InputProcessor {
 		spriteBatch.enableBlending();
 		spriteBatch.draw(spriteAvion, x, y);
 		spriteBatch.end();
+		
+		stage.draw();
 	}
 
 	@Override

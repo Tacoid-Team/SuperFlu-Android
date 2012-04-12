@@ -1,6 +1,5 @@
 package com.tacoid.superflu.entities;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Ville {
@@ -14,8 +13,11 @@ public class Ville {
 	private int habitantsImmunises;
 	private int habitantsMorts;
 
-	private ArrayList<StockVaccin> stocksVaccins = new ArrayList<StockVaccin>();
-	private ArrayList<StockTraitement> stocksTraitements = new ArrayList<StockTraitement>();
+	private int stockVaccins = 0;
+	private int stockVaccinsMax = 500000;
+	
+	private int stockTraitements = 0;
+	private int stockTraitementsMax = 100000;
 
 	public Ville(Zone zone, String nom, int x, int y) {
 		Random r = new Random();
@@ -53,54 +55,26 @@ public class Ville {
 		return Math.min(d1, d2);
 	}
 
-	public void ajouteStockVaccin(Vaccin vaccin, int quantite) {
-		boolean ajoute = false;
-
-		for (StockVaccin sv : stocksVaccins) {
-			if (sv.getVaccin() == vaccin) {
-				sv.ajouteStock(quantite);
-				ajoute = true;
-				break;
-			}
-		}
-		if (!ajoute) {
-			stocksVaccins.add(new StockVaccin(quantite, vaccin));
+	public void ajouteStockVaccin(int quantite) {
+		stockVaccins += quantite;
+		if (stockVaccins > stockVaccinsMax) {
+			stockVaccins = stockVaccinsMax;
 		}
 	}
 
-	public void retireStockVaccin(Vaccin vaccin, int quantite) {
+	public void retireStockVaccin(int quantite) {
+		stockVaccins = Math.max(stockVaccins-quantite,0);
+	}
 
-		for (StockVaccin sv : stocksVaccins) {
-			if (sv.getVaccin() == vaccin) {
-				sv.retireStock(quantite);
-				break;
-			}
+	public void ajouteStockTraitement(int quantite) {
+		stockTraitements += quantite;
+		if (stockTraitements > stockTraitementsMax) {
+			stockTraitements = stockTraitementsMax;
 		}
 	}
 
-	public void ajouteStockTraitement(Traitement traitement, int quantite) {
-		boolean ajoute = false;
-
-		for (StockTraitement st : stocksTraitements) {
-			if (st.getTraitement() == traitement) {
-				st.ajouteStock(quantite);
-				ajoute = true;
-				break;
-			}
-		}
-		if (!ajoute) {
-			stocksTraitements.add(new StockTraitement(quantite, traitement));
-		}
-	}
-
-	public void retireStockTraitement(Traitement traitement, int quantite) {
-
-		for (StockTraitement st : stocksTraitements) {
-			if (st.getTraitement() == traitement) {
-				st.retireStock(quantite);
-				break;
-			}
-		}
+	public void retireStockTraitement(int quantite) {
+		stockTraitements = Math.max(stockTraitements-quantite,0);
 	}
 
 	public String getNom() {
@@ -175,7 +149,6 @@ public class Ville {
 	 * Mise à jour des données de la ville.
 	 */
 	public void update() {
-		//System.out.println("Update !");
 		float transmission = 0.015f;
 		float perteImmunite = 0.0001f;
 		float mortalite = 0.00005f;
@@ -183,7 +156,6 @@ public class Ville {
 		if (getHabitants() > 0) {
 
 			// Infection :
-			/*System.out.println("Infection :");*/
 			float nouveauxHabitantsInfectes = (habitantsInfectes * transmission * ((float)habitantsSains / getHabitants()));
 			if (nouveauxHabitantsInfectes > 0) {
 				habitantsSains -= nouveauxHabitantsInfectes;
@@ -195,40 +167,27 @@ public class Ville {
 					habitantsInfectes += 1;
 				}
 			}
-			/*System.out.println("nouveaux : " + nouveauxHabitantsInfectes + " infectés (total) " + habitantsInfectes);*/
 
 			// Utilisation des traitements :
-			/*System.out.println("Traitements :");*/
-			if (stocksTraitements.size() > 0) {
-				if (habitantsInfectes > stocksTraitements.get(0).getStock()) {
-					habitantsInfectes -= stocksTraitements.get(0).getStock();
-					habitantsImmunises += stocksTraitements.get(0).getStock();
-					stocksTraitements.get(0).retireStock(stocksTraitements.get(0).getStock());
-					/*System.out.println("Utilise : " + stocksTraitements.get(0).getStock());*/
-				} else {
-					stocksTraitements.get(0).retireStock(habitantsInfectes);
-					habitantsImmunises += habitantsInfectes;
-					habitantsInfectes = 0;
-					/*System.out.println("Utilise : " + habitantsInfectes);*/
-				}
+			if (habitantsInfectes > stockTraitements) {
+				habitantsInfectes -= stockTraitements;
+				habitantsImmunises += stockTraitements;
+				retireStockTraitement(stockTraitements);
+			} else {
+				retireStockTraitement(habitantsInfectes);
+				habitantsImmunises += habitantsInfectes;
+				habitantsInfectes = 0;
 			}
 
 			// Perte immunité :
-			/*System.out.println("Perte immunité : ");*/
 			habitantsImmunises -= (int) (habitantsImmunises * perteImmunite);
-			/*System.out.println(habitantsImmunises);*/
 
 			// Utilisation des vaccins (sur les personnes saines) :
-			/*System.out.println("Utilisation vaccins : ");*/
-			if (stocksVaccins.size() > 0) {
-				int nouveauxHabitantsImmunises = Math.min(habitantsSains, stocksVaccins.get(0).getStock());
-				stocksVaccins.get(0).retireStock(nouveauxHabitantsImmunises);
-				habitantsSains -= nouveauxHabitantsImmunises;
-				habitantsImmunises += nouveauxHabitantsImmunises;
-				/*System.out.println("immunisés : " + habitantsImmunises);*/
-			}
+			int nouveauxHabitantsImmunises = Math.min(habitantsSains, stockVaccins);
+			retireStockVaccin(nouveauxHabitantsImmunises);
+			habitantsSains -= nouveauxHabitantsImmunises;
+			habitantsImmunises += nouveauxHabitantsImmunises;
 
-			/*System.out.println("Mortalité :");*/
 			// Mortalité :
 			float nouveauxHabitantsMorts = habitantsInfectes * mortalite;
 			if (nouveauxHabitantsMorts > 1) {
@@ -241,7 +200,6 @@ public class Ville {
 					habitantsMorts += 1;
 				}
 			}
-			/*System.out.println("morts " + habitantsMorts);*/
 		}
 	}
 
@@ -258,12 +216,12 @@ public class Ville {
 	}
 
 
-	public ArrayList<StockVaccin> getStocksVaccins() {
-		return stocksVaccins;
+	public int getStockVaccins() {
+		return stockVaccins;
 	}
 
-	public ArrayList<StockTraitement> getStocksTraitements() {
-		return stocksTraitements;
+	public int getStockTraitements() {
+		return stockTraitements;
 	}
 
 	public Zone getZone() {

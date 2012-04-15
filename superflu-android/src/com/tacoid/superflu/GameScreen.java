@@ -10,9 +10,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.tacoid.actors.VilleActor;
+import com.tacoid.actors.ZoneActor;
 import com.tacoid.superflu.entities.Usine;
 import com.tacoid.superflu.entities.Ville;
 import com.tacoid.superflu.entities.Zone;
@@ -21,26 +23,29 @@ public class GameScreen implements Screen {
 	private static final int VIRTUAL_WIDTH = 1024;
 	private static final int VIRTUAL_HEIGHT = 544; // XXX: Très plat :);
 
-	private Texture backgroundTexture;
-	private TextureRegion villeTextureRegion;
-	private TextureRegion backgroundTextureRegion;
 	private Stage stage;
+	private Group groupZones;
+	private Group groupVilles;
 
 	public GameScreen(SuperFlu superflu) {
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+		groupZones = new Group();
+		groupVilles = new Group();
 	
-		backgroundTexture = new Texture(
-				Gdx.files.internal("data/fond_carte.png"));
-		backgroundTextureRegion = new TextureRegion(backgroundTexture, 1024,
-				544);
+		Texture backgroundTexture = new Texture(Gdx.files.internal("data/fond_carte.png"));
+		TextureRegion backgroundTextureRegion = new TextureRegion(backgroundTexture, 1024, 544);
 		Image imgBackground = new Image(backgroundTextureRegion);
 		imgBackground.touchable = false;
 		stage.addActor(imgBackground);
 		
-		//Texture textureAvion = new Texture(Gdx.files.internal("data/avion.png"));
-		//stage.addActor(new Image(new TextureRegion(textureAvion, 48, 48))); //XXX: En fait un vrai actor et pas juste une image !
-		//XXX: D'ailleurs une question : Est-ce qu'on fait de l'entity ville un actor ou est-ce qu'on fait une classe VilleActor qui contient une référence vers l'entity associée ?
-	
+		Texture carteTexture = new Texture(Gdx.files.internal("data/carte.png"));
+		TextureRegion carteTextureRegion = new TextureRegion(carteTexture, 1024, 544);
+		Image carte = new Image(carteTextureRegion);
+		carte.touchable = false;
+		stage.addActor(carte);
+		
+		stage.addActor(groupZones);
+		stage.addActor(groupVilles);
 	
 		createEntities();
 	}
@@ -94,7 +99,8 @@ public class GameScreen implements Screen {
 	
 	private void createEntities() {
 		for (int i = 1; i <= 6; i++) {
-			createZone(i);
+			Zone zone = createZone(i);
+			groupZones.addActor(new ZoneActor(zone));
 		}
 	}
 
@@ -122,14 +128,14 @@ public class GameScreen implements Screen {
 								Integer.valueOf(tab[1]),
 								Integer.valueOf(tab[2]));
 						
-						stage.addActor(new VilleActor(usine));
+						groupVilles.addActor(new VilleActor(usine));
 						zone.addVille(usine);
 					} else {
 						Ville ville = new Ville(zone, tab[0],
 								Integer.valueOf(tab[1]),
 								Integer.valueOf(tab[2]));
 						
-						stage.addActor(new VilleActor(ville));	
+						groupVilles.addActor(new VilleActor(ville));	
 						zone.addVille(ville);
 					}
 				} else {

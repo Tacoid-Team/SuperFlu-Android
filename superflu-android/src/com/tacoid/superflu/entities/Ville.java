@@ -18,7 +18,7 @@ public class Ville implements Entity {
 
 	private int stockTraitements = 0;
 	private int stockTraitementsMax = 100000;
-
+	
 	public Ville(Zone zone, String nom, int x, int y) {
 		Random r = new Random();
 
@@ -237,5 +237,10 @@ public class Ville implements Entity {
 		return nom + ":\n" + "-Sains = " + this.habitantsSains + "\n"
 				+ "-Malades =" + this.habitantsInfectes + "\n" + "-Morts = "
 				+ this.habitantsMorts + "\n";
+	}
+
+	public boolean isUsine() {
+		System.out.println("ville isusine");
+		return false;
 	}
 }

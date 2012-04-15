@@ -32,4 +32,8 @@ public class Usine extends Ville {
 		super.update(delta);
 		produit(0); //XXX: populationInfectee.
 	}
+	
+	public boolean isUsine() {
+		return true;
+	}
 }

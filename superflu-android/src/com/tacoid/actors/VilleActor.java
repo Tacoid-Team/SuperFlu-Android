@@ -14,11 +14,17 @@ public class VilleActor extends Actor {
 
 	public VilleActor(Ville ville) {
 		this.ville = ville;
-		villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/ville.png")), 24, 24);
+		if (ville.isUsine()) {
+			villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/usine.png")), 25, 20);
+			this.width = 25;
+			this.height = 20;
+		} else {
+			villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/ville.png")), 24, 24);
+			this.width = 24;
+			this.height = 24;
+		}
 		this.x = ville.getX();
 		this.y = ville.getY();
-		this.width = 24;
-		this.height = 24;
 	}
 	
 	@Override

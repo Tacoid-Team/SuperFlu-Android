@@ -130,6 +130,7 @@ public class GameScreen implements Screen {
 						
 						groupVilles.addActor(new VilleActor(usine));
 						zone.addVille(usine);
+						first = false;
 					} else {
 						Ville ville = new Ville(zone, tab[0],
 								Integer.valueOf(tab[1]),

@@ -48,6 +48,7 @@ public class GameScreen implements Screen {
 		stage.addActor(groupVilles);
 	
 		createEntities();
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
@@ -71,6 +72,7 @@ public class GameScreen implements Screen {
 		// clear previous frame
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+		stage.act(delta);
 		stage.draw();
 	}
 
@@ -81,7 +83,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-
+		stage.dispose();
 	}
 
 	@Override

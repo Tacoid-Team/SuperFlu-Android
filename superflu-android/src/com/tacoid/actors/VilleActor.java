@@ -24,22 +24,22 @@ public class VilleActor extends Actor {
 			this.height = 24;
 		}
 		this.x = ville.getX();
-		this.y = ville.getY();
+		this.y = 544 - ville.getY();
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.draw(villeTextureRegion, x - width / 2, 544 - y - height/2);
+		batch.draw(villeTextureRegion, x - width / 2, y - height/2);
 	}
 
 	@Override
 	public Actor hit(float x, float y) {
-		System.out.println(x + " " + y);
-		return this;
+		return x > -width/2 && x < width/2 && y > -height/2 && y < height/2 ? this : null;
 	}
 
 	@Override
 	public boolean touchDown(float x, float y, int pointer) {
+		System.out.println("touch down !" + ville.getNom());
 		return true;
 	}
 }

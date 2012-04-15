@@ -23,7 +23,7 @@ public class VilleActor extends Actor {
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.draw(villeTextureRegion, x, 544 - y);
+		batch.draw(villeTextureRegion, x - width / 2, 544 - y - height/2);
 	}
 
 	@Override

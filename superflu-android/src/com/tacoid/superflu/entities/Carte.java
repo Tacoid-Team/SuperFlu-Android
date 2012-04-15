@@ -23,13 +23,6 @@ public class Carte implements Entity {
 	private ArrayList<Zone> zones = new ArrayList<Zone>();
 
 	public Carte() {
-		zones.add(new Zone(1));
-		zones.add(new Zone(2));
-		zones.add(new Zone(3));
-		zones.add(new Zone(4));
-		zones.add(new Zone(5));
-		zones.add(new Zone(6));
-
 		courbe_morts = new int[longueur_courbe];
 		courbe_infectes = new int[longueur_courbe];
 		courbe_vaccines = new int[longueur_courbe];

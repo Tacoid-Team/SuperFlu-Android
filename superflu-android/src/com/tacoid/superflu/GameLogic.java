@@ -1,6 +1,9 @@
 package com.tacoid.superflu;
 
+import java.util.Random;
+
 import com.tacoid.superflu.entities.Carte;
+import com.tacoid.superflu.entities.Ville;
 import com.tacoid.superflu.entities.Zone;
 
 public class GameLogic {
@@ -11,7 +14,16 @@ public class GameLogic {
 	private int populationMondiale = 0;
 	private int populationMorte = 0;
 	
-	private Carte carte;
+	private final Carte carte;
+	
+	public enum EtatJeu {
+		WAIT, EN_COURS, GAGNE, PERDU
+	};
+	private EtatJeu etat = EtatJeu.WAIT;
+	
+	public GameLogic(Carte carte) {
+		this.carte = carte;
+	}
 	
 	private void updatePopulation() {
 		populationInfectee = 0;
@@ -26,11 +38,26 @@ public class GameLogic {
 	}
 	
 	private void creerEpidemie() {
+		Random rand = new Random();
 		
+		int i = rand.nextInt(6);
+		Zone randZone = carte.getZones().get(i);
+		
+		int j = rand.nextInt(randZone.getVilles().size());
+		Ville randVille = randZone.getVilles().get(j);
+		
+		randVille.ajouteHabitantsInfectes(2000);
 	}
 	
 	public void update(float delta) {
-		updatePopulation();
+		if (this.etat == EtatJeu.EN_COURS) {
+			updatePopulation();
+			this.carte.update(delta);
+			
+			if (this.populationMorte > (this.populationMondiale + this.populationMorte)*POURCENTAGE_ECHEC) {
+				this.etat = EtatJeu.PERDU;
+			}
+		}
 	}
 	
 	public boolean isPandemic() {

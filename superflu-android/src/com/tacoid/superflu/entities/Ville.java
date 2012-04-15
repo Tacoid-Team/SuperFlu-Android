@@ -64,19 +64,11 @@ public class Ville implements Entity {
 		}
 	}
 
-	public void retireStockVaccin(int quantite) {
-		stockVaccins = Math.max(stockVaccins - quantite, 0);
-	}
-
 	public void ajouteStockTraitement(int quantite) {
 		stockTraitements += quantite;
 		if (stockTraitements > stockTraitementsMax) {
 			stockTraitements = stockTraitementsMax;
 		}
-	}
-
-	public void retireStockTraitement(int quantite) {
-		stockTraitements = Math.max(stockTraitements - quantite, 0);
 	}
 
 	public String getNom() {
@@ -226,10 +218,6 @@ public class Ville implements Entity {
 
 	public int getY() {
 		return y;
-	}
-
-	public boolean isOnCity(int x, int y) {
-		return (x - this.x) * (x - this.x) + (y - this.y) * (y - this.y) < 500;
 	}
 
 	public int getStockVaccins() {

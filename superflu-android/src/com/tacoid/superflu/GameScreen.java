@@ -1,5 +1,10 @@
 package com.tacoid.superflu;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
@@ -7,6 +12,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.tacoid.superflu.entities.Usine;
+import com.tacoid.superflu.entities.Ville;
+import com.tacoid.superflu.entities.Zone;
 
 public class GameScreen implements Screen {
 	private static final int VIRTUAL_WIDTH = 1024;
@@ -35,6 +43,9 @@ public class GameScreen implements Screen {
 		Texture textureAvion = new Texture(Gdx.files.internal("data/avion.png"));
 		stage.addActor(new Image(new TextureRegion(textureAvion, 48, 48))); //XXX: En fait un vrai actor et pas juste une image !
 		//XXX: D'ailleurs une question : Est-ce qu'on fait de l'entity ville un actor ou est-ce qu'on fait une classe VilleActor qui contient une référence vers l'entity associée ?
+	
+	
+		createEntities();
 	}
 
 	@Override
@@ -82,4 +93,65 @@ public class GameScreen implements Screen {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	private void createEntities() {
+		for (int i = 1; i <= 6; i++) {
+			createZone(i);
+		}
+	}
+
+	private Zone createZone(int id) {
+		final String nom; // Nom de la zone;		
+		final String filepath = "ressources/zones/zone" + id + ".data";
+		boolean first = true;
+
+		try {
+			BufferedReader buff = new BufferedReader(new InputStreamReader(
+					getClass().getClassLoader().getResourceAsStream(filepath)));
+			String line;
+
+			nom = buff.readLine();
+			
+			// Creation de la zone.
+			Zone zone = new Zone(id, nom);
+
+			while ((line = buff.readLine()) != null) {
+				String tab[] = line.split(" ");
+
+				if (tab.length == 3) {
+					tab[0] = tab[0].replace('_', ' ');
+					if (first) {
+						Usine usine = new Usine(zone, tab[0],
+								Integer.valueOf(tab[1]),
+								Integer.valueOf(tab[2]));
+						
+						// TODO: Créer objet graphique.
+						zone.addVille(usine);
+					} else {
+						Ville ville = new Ville(zone, tab[0],
+								Integer.valueOf(tab[1]),
+								Integer.valueOf(tab[2]));
+						
+						// TODO: Créer objet graphique.
+						zone.addVille(ville);
+					}
+				} else {
+					System.err.println("Erreur lecture " + filepath
+							+ "continue quand même...");
+				}
+			}
+
+			buff.close();
+			return zone;
+		} catch (FileNotFoundException e) {
+			System.err.println("Fichier " + filepath
+					+ " introuvable ! Aucune ville chargée pour cette zone.");
+		} catch (IOException e) {
+			System.err.println("Erreur à la lecture de " + filepath + ".");
+		}
+		
+		return null;
+	}
+	
 }

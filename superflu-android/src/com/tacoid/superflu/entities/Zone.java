@@ -17,8 +17,8 @@ public class Zone {
 	private Usine usine;
 
 	private int population;
-	private int population_infectee;
-	private int population_morte;
+	private int populationInfectee;
+	private int populationMorte;
 
 	public int getPopulation() {
 		return population;
@@ -28,20 +28,12 @@ public class Zone {
 		this.population = population;
 	}
 
-	public int getPopulation_infectee() {
-		return population_infectee;
+	public int getPopulationInfectee() {
+		return populationInfectee;
 	}
 
-	public void setPopulation_infectee(int populationInfectee) {
-		population_infectee = populationInfectee;
-	}
-
-	public int getPopulation_morte() {
-		return population_morte;
-	}
-
-	public void setPopulation_morte(int populationMorte) {
-		population_morte = populationMorte;
+	public int getPopulationMorte() {
+		return populationMorte;
 	}
 
 	public Zone(int id) {
@@ -49,6 +41,22 @@ public class Zone {
 		chargeVilles();
 	}
 
+	public String getNom() {
+		return nom;
+	}
+
+	public Usine getUsine() {
+		return usine;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public ArrayList<Ville> getVilles() {
+		return villes;
+	}
+	
 	private void chargeVilles() {
 		String filepath = "ressources/zones/zone" + id + ".data";
 
@@ -87,21 +95,5 @@ public class Zone {
 		} catch (IOException e) {
 			System.err.println("Erreur � la lecture de " + filepath + ".");
 		}
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public Usine getUsine() {
-		return usine;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public ArrayList<Ville> getVilles() {
-		return villes;
 	}
 }

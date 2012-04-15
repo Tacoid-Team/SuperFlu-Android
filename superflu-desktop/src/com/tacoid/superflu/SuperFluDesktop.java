@@ -1,6 +1,5 @@
 package com.tacoid.superflu;
 import com.badlogic.gdx.backends.jogl.JoglApplication;
-import com.tacoid.superflu.GameScreen;
 
 public class SuperFluDesktop {
 	public static void main(String[] argv) {

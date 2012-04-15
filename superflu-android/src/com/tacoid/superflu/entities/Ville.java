@@ -2,7 +2,7 @@ package com.tacoid.superflu.entities;
 
 import java.util.Random;
 
-public class Ville {
+public class Ville implements Entity {
 
 	private Zone zone;
 	protected String nom;
@@ -84,9 +84,6 @@ public class Ville {
 	}
 
 	public int getHabitants() {
-		if (habitantsSains + habitantsImmunises + habitantsInfectes < 0) {
-			System.err.println("ERRRRRRRR");
-		}
 		return habitantsSains + habitantsImmunises + habitantsInfectes;
 	}
 
@@ -131,7 +128,7 @@ public class Ville {
 	}
 
 	public int getPourcentageInfectes() {
-		return (int) (100 * ((float) habitantsInfectes / getHabitants()));
+		return (int) (100 * ((double) habitantsInfectes / getHabitants()));
 	}
 
 	public boolean isMine(Joueur joueur) {
@@ -150,57 +147,74 @@ public class Ville {
 	/**
 	 * Mise à jour des données de la ville.
 	 */
-	public void update() {
-		float transmission = 0.015f;
-		float perteImmunite = 0.0001f;
-		float mortalite = 0.00005f;
-
+	public void update(float delta) {
+		double transmission = 0.00025;
+		double perteImmunite = 0.000001;
+		double mortalite = 0.0000005;
+		
+		this.stockVaccins = (int) Math.round(this.stockVaccins * Math.pow(0.995, Math.floor(delta / 10)));
+		this.stockTraitements = (int) Math.round(this.stockTraitements * Math.pow(0.997, Math.floor(delta / 10)));
+		
 		if (getHabitants() > 0) {
-
+			
 			// Infection :
-			float nouveauxHabitantsInfectes = (habitantsInfectes * transmission * ((float) habitantsSains / getHabitants()));
-			if (nouveauxHabitantsInfectes > 0) {
-				habitantsSains -= nouveauxHabitantsInfectes;
-				habitantsInfectes += nouveauxHabitantsInfectes;
-			} else {
-				Random rand = new Random();
-				if (rand.nextFloat() < nouveauxHabitantsInfectes) {
-					habitantsSains -= 1;
-					habitantsInfectes += 1;
+			if (habitantsInfectes > 0) {
+				double nouveauxHabitantsInfectes = (habitantsInfectes * transmission * ((double) habitantsSains / getHabitants())) * delta;
+				if (nouveauxHabitantsInfectes >= 1) {
+					habitantsSains -= nouveauxHabitantsInfectes;
+					habitantsInfectes += nouveauxHabitantsInfectes;
+				} else {
+					Random rand = new Random();
+					if (rand.nextDouble() < nouveauxHabitantsInfectes) {
+						habitantsSains -= 1;
+						habitantsInfectes += 1;
+					}
 				}
 			}
 
 			// Utilisation des traitements :
-			if (habitantsInfectes > stockTraitements) {
-				habitantsInfectes -= stockTraitements;
-				habitantsImmunises += stockTraitements;
-				retireStockTraitement(stockTraitements);
-			} else {
-				retireStockTraitement(habitantsInfectes);
-				habitantsImmunises += habitantsInfectes;
-				habitantsInfectes = 0;
+			if (this.stockTraitements > 0) {
+				int nouveauxHabitantsImmunises = Math.min(this.habitantsInfectes, this.stockTraitements);
+				this.stockTraitements -= nouveauxHabitantsImmunises;
+				this.habitantsInfectes -= nouveauxHabitantsImmunises;
+				this.habitantsImmunises += nouveauxHabitantsImmunises;
 			}
 
-			// Perte immunit� :
-			habitantsImmunises -= (int) (habitantsImmunises * perteImmunite);
+			// Perte immunité :
+			if (this.habitantsImmunises > 0) {
+				double perte = habitantsImmunises * perteImmunite * delta;
+				if (perte >= 1) {
+					this.habitantsImmunises -= perte;
+					this.habitantsSains += perte;
+				} else {
+					Random rand = new Random();
+					if (rand.nextDouble() < perte) {
+						habitantsSains -= 1;
+						habitantsInfectes += 1;
+					}
+				}
+			}
 
 			// Utilisation des vaccins (sur les personnes saines) :
-			int nouveauxHabitantsImmunises = Math.min(habitantsSains,
-					stockVaccins);
-			retireStockVaccin(nouveauxHabitantsImmunises);
-			habitantsSains -= nouveauxHabitantsImmunises;
-			habitantsImmunises += nouveauxHabitantsImmunises;
+			if (this.stockVaccins > 0) {
+				int nouveauxHabitantsImmunises = Math.min(this.habitantsSains, this.stockVaccins);
+				this.stockVaccins -= nouveauxHabitantsImmunises;
+				this.habitantsSains -= nouveauxHabitantsImmunises;
+				this.habitantsImmunises += nouveauxHabitantsImmunises;
+			}
 
-			// Mortalit� :
-			float nouveauxHabitantsMorts = habitantsInfectes * mortalite;
-			if (nouveauxHabitantsMorts > 1) {
-				habitantsInfectes -= nouveauxHabitantsMorts;
-				habitantsMorts += nouveauxHabitantsMorts;
-			} else {
-				Random rand = new Random();
-				if (rand.nextFloat() < nouveauxHabitantsMorts) {
-					habitantsInfectes -= 1;
-					habitantsMorts += 1;
+			// Mortalité :
+			if (this.habitantsInfectes > 0) {
+				double nouveauxHabitantsMorts = habitantsInfectes * mortalite * delta;
+				if (nouveauxHabitantsMorts >= 1) {
+					habitantsInfectes -= nouveauxHabitantsMorts;
+					habitantsMorts += nouveauxHabitantsMorts;
+				} else {
+					Random rand = new Random();
+					if (rand.nextDouble() < nouveauxHabitantsMorts) {
+						habitantsInfectes -= 1;
+						habitantsMorts += 1;
+					}
 				}
 			}
 		}

@@ -28,8 +28,8 @@ public class Usine extends Ville {
 		this.productionRateVaccins = productionRateVaccins;
 	}
 	
-	public void update() {
-		super.update();
+	public void update(float delta) {
+		super.update(delta);
 		produit(0); //XXX: populationInfectee.
 	}
 }

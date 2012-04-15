@@ -57,6 +57,25 @@ public class Zone {
 		return villes;
 	}
 	
+	public void update(float delta) {
+		updatePopulation();
+		for (Ville ville : villes) {
+			ville.update(delta);
+		}
+	}
+	
+	private void updatePopulation() {
+		populationInfectee = 0;
+		population = 0;
+		populationMorte = 0;
+		
+		for (Ville ville : villes) {
+			populationInfectee += ville.getHabitantsInfectes();
+			population += ville.getHabitants();
+			populationMorte += ville.getHabitantsMorts();
+		}
+	}
+	
 	private void chargeVilles() {
 		String filepath = "ressources/zones/zone" + id + ".data";
 

@@ -3,7 +3,7 @@ package com.tacoid.superflu.entities;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Carte {
+public class Carte implements Entity {
 
 	private static final int longueur_courbe = 100;
 	private static int courbe_morts[] = null;
@@ -47,4 +47,14 @@ public class Carte {
 		return zones;
 	}
 
+	public void update(float delta) {
+		for (Zone zone : zones) {
+			zone.update(delta);
+		}
+		migrations(delta);
+	}
+	
+	private void migrations(float delta) {
+		
+	}
 }

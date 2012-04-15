@@ -240,7 +240,6 @@ public class Ville implements Entity {
 	}
 
 	public boolean isUsine() {
-		System.out.println("ville isusine");
 		return false;
 	}
 }

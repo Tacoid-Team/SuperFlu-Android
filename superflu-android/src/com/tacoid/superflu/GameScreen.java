@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.tacoid.actors.VilleActor;
 import com.tacoid.superflu.entities.Usine;
 import com.tacoid.superflu.entities.Ville;
 import com.tacoid.superflu.entities.Zone;
@@ -32,16 +33,12 @@ public class GameScreen implements Screen {
 				Gdx.files.internal("data/fond_carte.png"));
 		backgroundTextureRegion = new TextureRegion(backgroundTexture, 1024,
 				544);
-		stage.addActor(new Image(backgroundTextureRegion));
+		Image imgBackground = new Image(backgroundTextureRegion);
+		imgBackground.touchable = false;
+		stage.addActor(imgBackground);
 		
-		villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/ville.png")), 24, 24);
-		Image img = new Image(villeTextureRegion);
-		img.x = 1000;
-		img.y = 520;
-		stage.addActor(img);
-		
-		Texture textureAvion = new Texture(Gdx.files.internal("data/avion.png"));
-		stage.addActor(new Image(new TextureRegion(textureAvion, 48, 48))); //XXX: En fait un vrai actor et pas juste une image !
+		//Texture textureAvion = new Texture(Gdx.files.internal("data/avion.png"));
+		//stage.addActor(new Image(new TextureRegion(textureAvion, 48, 48))); //XXX: En fait un vrai actor et pas juste une image !
 		//XXX: D'ailleurs une question : Est-ce qu'on fait de l'entity ville un actor ou est-ce qu'on fait une classe VilleActor qui contient une référence vers l'entity associée ?
 	
 	
@@ -103,12 +100,11 @@ public class GameScreen implements Screen {
 
 	private Zone createZone(int id) {
 		final String nom; // Nom de la zone;		
-		final String filepath = "ressources/zones/zone" + id + ".data";
+		final String filepath = "zones/zone" + id + ".data";
 		boolean first = true;
 
 		try {
-			BufferedReader buff = new BufferedReader(new InputStreamReader(
-					getClass().getClassLoader().getResourceAsStream(filepath)));
+			BufferedReader buff = Gdx.files.internal(filepath).reader(1024);
 			String line;
 
 			nom = buff.readLine();
@@ -126,14 +122,14 @@ public class GameScreen implements Screen {
 								Integer.valueOf(tab[1]),
 								Integer.valueOf(tab[2]));
 						
-						// TODO: Créer objet graphique.
+						stage.addActor(new VilleActor(usine));
 						zone.addVille(usine);
 					} else {
 						Ville ville = new Ville(zone, tab[0],
 								Integer.valueOf(tab[1]),
 								Integer.valueOf(tab[2]));
 						
-						// TODO: Créer objet graphique.
+						stage.addActor(new VilleActor(ville));	
 						zone.addVille(ville);
 					}
 				} else {

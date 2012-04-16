@@ -58,6 +58,46 @@ public class VilleActor extends Actor {
 		}
 		renderer.end();
 		
+		// -----
+		
+		// On dessine la barre de stock de traitements
+		p = 0.5f * ville.getStockTraitements() / ville.getStockTraitementsMax();
+		Gdx.gl11.glColor4f(0,0,0,1);
+		Gdx.gl11.glLineWidth(6);
+		renderer.begin(GL10.GL_LINES);
+		{
+			renderer.vertex( -(3 + width/2), 1 + height/2, 0);
+			renderer.vertex( -(3 + width/2), -1 - height/2, 0);
+		}
+		renderer.end();
+		Gdx.gl11.glColor4f(0.2f,0.2f,0.5f+p,1);
+		Gdx.gl11.glLineWidth(4);
+		renderer.begin(GL10.GL_LINES);
+		{
+		renderer.vertex( -(3 + width/2), -height/2 , 0);
+		renderer.vertex( -(3 + width/2), -height/2 + height*2*p, 0);
+		}
+		renderer.end();
+		
+		// On dessine la barre de stock de vaccins
+		p = 0.5f * ville.getStockVaccins() / ville.getStockVaccinsMax();
+		Gdx.gl11.glColor4f(0,0,0,1);
+		Gdx.gl11.glLineWidth(6);
+		renderer.begin(GL10.GL_LINES);
+		{
+			renderer.vertex( (3 + width/2), 1 + height/2, 0);
+			renderer.vertex( (3 + width/2), -1 - height/2, 0);
+		}
+		renderer.end();
+		Gdx.gl11.glColor4f(0.2f,0.2f,0.5f+p,1);
+		Gdx.gl11.glLineWidth(4);
+		renderer.begin(GL10.GL_LINES);
+		{
+		renderer.vertex( (3 + width/2), -height/2 , 0);
+		renderer.vertex( (3 + width/2), -height/2 + height*2*p, 0);
+		}
+		renderer.end();
+		
 		
 		Gdx.gl11.glPopMatrix();
 		Gdx.gl11.glEnable(GL10.GL_TEXTURE_2D);

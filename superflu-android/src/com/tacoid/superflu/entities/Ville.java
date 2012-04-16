@@ -223,11 +223,19 @@ public class Ville implements Entity {
 	public int getStockVaccins() {
 		return stockVaccins;
 	}
+	
+	public int getStockVaccinsMax() {
+		return stockVaccinsMax;
+	}
 
 	public int getStockTraitements() {
 		return stockTraitements;
 	}
 
+	public int getStockTraitementsMax() {
+		return stockTraitementsMax;
+	}
+	
 	public Zone getZone() {
 		return zone;
 	}

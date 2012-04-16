@@ -3,7 +3,6 @@ package com.tacoid.superflu;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -13,8 +12,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.tacoid.actors.VilleActor;
-import com.tacoid.actors.ZoneActor;
+import com.tacoid.superflu.actors.VilleActor;
+import com.tacoid.superflu.actors.ZoneActor;
 import com.tacoid.superflu.entities.Usine;
 import com.tacoid.superflu.entities.Ville;
 import com.tacoid.superflu.entities.Zone;

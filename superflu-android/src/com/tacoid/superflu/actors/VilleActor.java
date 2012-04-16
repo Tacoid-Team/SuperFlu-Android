@@ -1,4 +1,4 @@
-package com.tacoid.actors;
+package com.tacoid.superflu.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

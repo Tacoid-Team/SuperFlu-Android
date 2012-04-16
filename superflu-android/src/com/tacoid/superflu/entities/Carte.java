@@ -20,9 +20,10 @@ public class Carte implements Entity {
 				+ ", dephasage_courbes=" + dephasage_courbes + "]";
 	}
 
-	private ArrayList<Zone> zones = new ArrayList<Zone>();
+	private ArrayList<Zone> zones;
 
 	public Carte() {
+		zones = new ArrayList<Zone>();
 		courbe_morts = new int[longueur_courbe];
 		courbe_infectes = new int[longueur_courbe];
 		courbe_vaccines = new int[longueur_courbe];
@@ -34,6 +35,10 @@ public class Carte implements Entity {
 			courbe_infectes[i] = 0;
 			courbe_vaccines[i] = 0;
 		}
+	}
+	
+	public void addZone(Zone zone) {
+		zones.add(zone);
 	}
 
 	public ArrayList<Zone> getZones() {

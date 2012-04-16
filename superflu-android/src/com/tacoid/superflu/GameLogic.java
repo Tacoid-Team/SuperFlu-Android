@@ -50,7 +50,10 @@ public class GameLogic {
 	}
 	
 	public void update(float delta) {
-		if (this.etat == EtatJeu.EN_COURS) {
+		if (this.etat == EtatJeu.WAIT) {
+			creerEpidemie();
+			this.etat = EtatJeu.EN_COURS;
+		} else if (this.etat == EtatJeu.EN_COURS) {
 			updatePopulation();
 			this.carte.update(delta);
 			

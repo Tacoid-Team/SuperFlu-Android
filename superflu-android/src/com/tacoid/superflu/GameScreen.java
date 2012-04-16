@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.tacoid.superflu.actors.VilleActor;
 import com.tacoid.superflu.actors.ZoneActor;
+import com.tacoid.superflu.entities.Carte;
 import com.tacoid.superflu.entities.Usine;
 import com.tacoid.superflu.entities.Ville;
 import com.tacoid.superflu.entities.Zone;
@@ -25,6 +26,7 @@ public class GameScreen implements Screen {
 	private Stage stage;
 	private Group groupZones;
 	private Group groupVilles;
+	private GameLogic gameLogic;
 
 	public GameScreen(SuperFlu superflu) {
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
@@ -67,6 +69,7 @@ public class GameScreen implements Screen {
 		GL10 gl = Gdx.graphics.getGL10();
 
 		// Update model
+		gameLogic.update(delta);
 
 		// clear previous frame
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
@@ -99,9 +102,12 @@ public class GameScreen implements Screen {
 	
 	
 	private void createEntities() {
+		Carte carte = new Carte();
+		gameLogic = new GameLogic(carte);
 		for (int i = 1; i <= 6; i++) {
 			Zone zone = createZone(i);
 			groupZones.addActor(new ZoneActor(zone));
+			carte.addZone(zone);
 		}
 	}
 

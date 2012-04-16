@@ -12,17 +12,21 @@ import com.tacoid.superflu.entities.Ville;
 public class VilleActor extends Actor {
 
 	private TextureRegion villeTextureRegion;
+	private TextureRegion villeTextureRegionHL;
 	private Ville ville;
 	private ImmediateModeRenderer10 renderer;
+	private boolean touched;
 
 	public VilleActor(Ville ville) {
 		this.ville = ville;
 		if (ville.isUsine()) {
 			villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/usine.png")), 25, 20);
+			villeTextureRegionHL = new TextureRegion(new Texture(Gdx.files.internal("data/HL_usine.png")), 25, 20);
 			this.width = 25;
 			this.height = 20;
 		} else {
 			villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/ville.png")), 20, 20);
+			villeTextureRegionHL = new TextureRegion(new Texture(Gdx.files.internal("data/HL_ville.png")), 20, 20);
 			this.width = 20;
 			this.height = 20;
 		}
@@ -102,6 +106,11 @@ public class VilleActor extends Actor {
 		Gdx.gl11.glPopMatrix();
 		Gdx.gl11.glEnable(GL10.GL_TEXTURE_2D);
 		batch.draw(villeTextureRegion, x - width / 2, y - height/2);
+		if (touched) {
+			batch.draw(villeTextureRegionHL, x - width / 2, y - height / 2);
+		} else {
+			batch.draw(villeTextureRegion, x - width / 2, y - height / 2);
+		}
 	}
 
 	@Override
@@ -112,6 +121,12 @@ public class VilleActor extends Actor {
 	@Override
 	public boolean touchDown(float x, float y, int pointer) {
 		System.out.println("touch down !" + ville.getNom());
+		touched = true;
 		return true;
+	}
+	
+	@Override
+	public void touchUp(float x, float y, int pointer) {
+		touched = false;
 	}
 }

@@ -33,13 +33,13 @@ public class GameScreen implements Screen {
 		groupZones = new Group();
 		groupVilles = new Group();
 	
-		Texture backgroundTexture = new Texture(Gdx.files.internal("data/fond_carte.png"));
+		Texture backgroundTexture = new Texture(Gdx.files.internal("images/fond_carte.png"));
 		TextureRegion backgroundTextureRegion = new TextureRegion(backgroundTexture, 1024, 544);
 		Image imgBackground = new Image(backgroundTextureRegion);
 		imgBackground.touchable = false;
 		stage.addActor(imgBackground);
 		
-		Texture carteTexture = new Texture(Gdx.files.internal("data/carte.png"));
+		Texture carteTexture = new Texture(Gdx.files.internal("images/carte.png"));
 		TextureRegion carteTextureRegion = new TextureRegion(carteTexture, 1024, 544);
 		Image carte = new Image(carteTextureRegion);
 		carte.touchable = false;

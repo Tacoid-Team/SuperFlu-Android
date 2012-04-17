@@ -20,16 +20,16 @@ public class VilleActor extends Actor {
 
 	public VilleActor(Ville ville) {
 		this.ville = ville;
-		infected = new TextureRegion(new Texture(Gdx.files.internal("data/infected.png")), 20, 20);
-		infected2 = new TextureRegion(new Texture(Gdx.files.internal("data/infected2.png")), 20, 20);
+		infected = new TextureRegion(new Texture(Gdx.files.internal("images/infected.png")), 20, 20);
+		infected2 = new TextureRegion(new Texture(Gdx.files.internal("images/infected2.png")), 20, 20);
 		if (ville.isUsine()) {
-			villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/usine.png")), 25, 20);
-			villeTextureRegionHL = new TextureRegion(new Texture(Gdx.files.internal("data/HL_usine.png")), 25, 20);
+			villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("images/usine.png")), 25, 20);
+			villeTextureRegionHL = new TextureRegion(new Texture(Gdx.files.internal("images/HL_usine.png")), 25, 20);
 			this.width = 25;
 			this.height = 20;
 		} else {
-			villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/ville.png")), 20, 20);
-			villeTextureRegionHL = new TextureRegion(new Texture(Gdx.files.internal("data/HL_ville.png")), 20, 20);
+			villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("images/ville.png")), 20, 20);
+			villeTextureRegionHL = new TextureRegion(new Texture(Gdx.files.internal("images/HL_ville.png")), 20, 20);
 			this.width = 20;
 			this.height = 20;
 		}

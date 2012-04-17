@@ -16,7 +16,7 @@ public class ZoneActor extends Actor {
 	public ZoneActor(Zone zone) {
 		this.zone = zone;
 		
-		zoneTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/carte_zone" + zone.getId() + ".png")), 1024, 544);
+		zoneTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("images/carte_zone" + zone.getId() + ".png")), 1024, 544);
 	}
 	
 	@Override

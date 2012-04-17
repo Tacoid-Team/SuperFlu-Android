@@ -124,7 +124,7 @@ public class VilleActor extends Actor {
 
 	@Override
 	public Actor hit(float x, float y) {
-		return x > -width/2 && x < width/2 && y > -height/2 && y < height/2 ? this : null;
+		return x >= -width && x <= width && y >= -height && y <= height ? this : null;
 	}
 
 	@Override

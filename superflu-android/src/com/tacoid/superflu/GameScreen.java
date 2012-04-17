@@ -21,7 +21,7 @@ import com.tacoid.superflu.entities.Zone;
 
 public class GameScreen implements Screen {
 	private static final int VIRTUAL_WIDTH = 1024;
-	private static final int VIRTUAL_HEIGHT = 544; // XXX: Très plat :);
+	private static final int VIRTUAL_HEIGHT = 576;
 
 	private Stage stage;
 	private Group groupZones;
@@ -34,13 +34,13 @@ public class GameScreen implements Screen {
 		groupVilles = new Group();
 	
 		Texture backgroundTexture = new Texture(Gdx.files.internal("images/fond_carte.png"));
-		TextureRegion backgroundTextureRegion = new TextureRegion(backgroundTexture, 1024, 544);
+		TextureRegion backgroundTextureRegion = new TextureRegion(backgroundTexture, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		Image imgBackground = new Image(backgroundTextureRegion);
 		imgBackground.touchable = false;
 		stage.addActor(imgBackground);
 		
 		Texture carteTexture = new Texture(Gdx.files.internal("images/carte.png"));
-		TextureRegion carteTextureRegion = new TextureRegion(carteTexture, 1024, 544);
+		TextureRegion carteTextureRegion = new TextureRegion(carteTexture, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		Image carte = new Image(carteTextureRegion);
 		carte.touchable = false;
 		stage.addActor(carte);

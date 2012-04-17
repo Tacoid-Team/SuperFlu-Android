@@ -34,7 +34,7 @@ public class VilleActor extends Actor {
 			this.height = 20;
 		}
 		this.x = ville.getX();
-		this.y = 544 - ville.getY();
+		this.y = ville.getY();
 		
 		renderer = new ImmediateModeRenderer10();
 	}

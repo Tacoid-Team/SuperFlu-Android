@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.tacoid.superflu.actors.GlobalStatsActor;
 import com.tacoid.superflu.actors.VilleActor;
 import com.tacoid.superflu.actors.ZoneActor;
 import com.tacoid.superflu.entities.Carte;
@@ -50,6 +51,8 @@ public class GameScreen implements Screen {
 	
 		createEntities();
 		Gdx.input.setInputProcessor(stage);
+		
+		stage.addActor(new GlobalStatsActor(gameLogic));
 	}
 
 	@Override
@@ -102,8 +105,9 @@ public class GameScreen implements Screen {
 	
 	
 	private void createEntities() {
-		Carte carte = new Carte();
-		gameLogic = new GameLogic(carte);
+		gameLogic = new GameLogic();
+		Carte carte = new Carte(gameLogic);
+		gameLogic.setCarte(carte);
 		for (int i = 1; i <= 6; i++) {
 			Zone zone = createZone(i);
 			groupZones.addActor(new ZoneActor(zone));

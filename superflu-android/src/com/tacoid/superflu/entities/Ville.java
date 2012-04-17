@@ -96,6 +96,8 @@ public class Ville implements Entity {
 	}
 
 	public void ajouteHabitantsInfectes(int habitantsInfectes) {
+		if (habitantsInfectes > 0)
+			System.out.println("ajoute habitants infectes : " + habitantsInfectes);
 		this.habitantsInfectes += habitantsInfectes;
 	}
 
@@ -140,9 +142,9 @@ public class Ville implements Entity {
 	 * Mise à jour des données de la ville.
 	 */
 	public void update(float delta) {
-		double transmission = 0.00025;
-		double perteImmunite = 0.000001;
-		double mortalite = 0.0000005;
+		double transmission = 0.025;
+		double perteImmunite = 0.00001;
+		double mortalite = 0.000005;
 		
 		this.stockVaccins = (int) Math.round(this.stockVaccins * Math.pow(0.995, Math.floor(delta / 10)));
 		this.stockTraitements = (int) Math.round(this.stockTraitements * Math.pow(0.997, Math.floor(delta / 10)));
@@ -156,8 +158,7 @@ public class Ville implements Entity {
 					habitantsSains -= nouveauxHabitantsInfectes;
 					habitantsInfectes += nouveauxHabitantsInfectes;
 				} else {
-					Random rand = new Random();
-					if (rand.nextDouble() < nouveauxHabitantsInfectes) {
+					if (Math.random() < nouveauxHabitantsInfectes) {
 						habitantsSains -= 1;
 						habitantsInfectes += 1;
 					}
@@ -179,8 +180,7 @@ public class Ville implements Entity {
 					this.habitantsImmunises -= perte;
 					this.habitantsSains += perte;
 				} else {
-					Random rand = new Random();
-					if (rand.nextDouble() < perte) {
+					if (Math.random() < perte) {
 						habitantsSains -= 1;
 						habitantsInfectes += 1;
 					}
@@ -202,8 +202,7 @@ public class Ville implements Entity {
 					habitantsInfectes -= nouveauxHabitantsMorts;
 					habitantsMorts += nouveauxHabitantsMorts;
 				} else {
-					Random rand = new Random();
-					if (rand.nextDouble() < nouveauxHabitantsMorts) {
+					if (Math.random() < nouveauxHabitantsMorts) {
 						habitantsInfectes -= 1;
 						habitantsMorts += 1;
 					}

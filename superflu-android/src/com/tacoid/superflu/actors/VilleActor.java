@@ -129,7 +129,7 @@ public class VilleActor extends Actor {
 
 	@Override
 	public boolean touchDown(float x, float y, int pointer) {
-		System.out.println("touch down !" + ville.getNom());
+		System.out.println("touch down !" + ville);
 		touched = true;
 		return true;
 	}

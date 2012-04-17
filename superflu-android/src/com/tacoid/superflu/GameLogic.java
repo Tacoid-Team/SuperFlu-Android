@@ -9,19 +9,19 @@ import com.tacoid.superflu.entities.Zone;
 public class GameLogic {
 	private final int POURCENTAGE_ECHEC = 1;
 	private final int POURCENTAGE_PANDEMIC = 5;
-	
+
 	private int populationInfectee = 0;
 	private int populationMondiale = 0;
 	private int populationMorte = 0;
 	
-	private final Carte carte;
+	private Carte carte;
 	
 	public enum EtatJeu {
 		WAIT, EN_COURS, GAGNE, PERDU
 	};
 	private EtatJeu etat = EtatJeu.WAIT;
 	
-	public GameLogic(Carte carte) {
+	public void setCarte(Carte carte) {
 		this.carte = carte;
 	}
 	
@@ -65,5 +65,17 @@ public class GameLogic {
 	
 	public boolean isPandemic() {
 		return populationInfectee * 100 / POURCENTAGE_PANDEMIC > populationMondiale;
+	}
+	
+	public int getPopulationInfectee() {
+		return populationInfectee;
+	}
+
+	public int getPopulationMondiale() {
+		return populationMondiale;
+	}
+
+	public int getPopulationMorte() {
+		return populationMorte;
 	}
 }

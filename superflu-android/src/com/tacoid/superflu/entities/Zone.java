@@ -51,11 +51,11 @@ public class Zone {
 		return villes;
 	}
 	
-	public void update(float delta) {
-		updatePopulation();
+	public void update(float delta) {		
 		for (Ville ville : villes) {
-			ville.update(delta);
+			ville.update(delta * 10);
 		}
+		updatePopulation();
 	}
 	
 	private void updatePopulation() {

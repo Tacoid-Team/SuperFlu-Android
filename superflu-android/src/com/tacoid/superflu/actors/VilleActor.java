@@ -16,9 +16,12 @@ public class VilleActor extends Actor {
 	private Ville ville;
 	private ImmediateModeRenderer10 renderer;
 	private boolean touched;
+	private TextureRegion infected, infected2;
 
 	public VilleActor(Ville ville) {
 		this.ville = ville;
+		infected = new TextureRegion(new Texture(Gdx.files.internal("data/infected.png")), 20, 20);
+		infected2 = new TextureRegion(new Texture(Gdx.files.internal("data/infected2.png")), 20, 20);
 		if (ville.isUsine()) {
 			villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/usine.png")), 25, 20);
 			villeTextureRegionHL = new TextureRegion(new Texture(Gdx.files.internal("data/HL_usine.png")), 25, 20);
@@ -105,11 +108,17 @@ public class VilleActor extends Actor {
 		
 		Gdx.gl11.glPopMatrix();
 		Gdx.gl11.glEnable(GL10.GL_TEXTURE_2D);
-		batch.draw(villeTextureRegion, x - width / 2, y - height/2);
+
 		if (touched) {
 			batch.draw(villeTextureRegionHL, x - width / 2, y - height / 2);
 		} else {
 			batch.draw(villeTextureRegion, x - width / 2, y - height / 2);
+		}
+		
+		if (ville.getHabitantsInfectes() > 200) {
+			batch.draw(infected, x - width / 2, y - height / 2);
+		} else if (ville.getHabitantsInfectes() > 1000) {
+			batch.draw(infected2, x - width / 2, y - height / 2);
 		}
 	}
 

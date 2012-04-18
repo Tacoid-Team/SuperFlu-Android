@@ -17,11 +17,11 @@ public class MainMenuScreen implements Screen {
 	private Stage stage;
 	final private SuperFlu superflu;
 
-	private class PlayMono extends Actor {
+	private class PlayMonoActor extends Actor {
 
 		private TextureRegion region;
 
-		public PlayMono() {
+		public PlayMonoActor() {
 			Texture texture = new Texture(Gdx.files.internal("images/jouer.png"));
 			region = new TextureRegion(texture, 303, 79);
 			x = 361;
@@ -47,6 +47,54 @@ public class MainMenuScreen implements Screen {
 		}
 	}
 	
+	private class ExitActor extends MenuIcon {
+		
+		public ExitActor() {
+			super("images/exit.png", "Quitter", 48, 48);
+			x = 900;
+			y = 40;
+		}
+
+		@Override
+		public Actor hit(float x, float y) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+	}
+	
+	private class OptionsActor extends MenuIcon {
+		
+		public OptionsActor() {
+			super("images/options.png", "Options", 48, 48);
+			x = 900;
+			y = 100;
+		}
+
+		@Override
+		public Actor hit(float x, float y) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+	}
+	
+	private class AboutActor extends MenuIcon {
+		
+		public AboutActor() {
+			super("images/about.png", "À propos", 48, 48);
+			x = 900;
+			y = 160;
+		}
+
+		@Override
+		public Actor hit(float x, float y) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+	}
+	
 	public MainMenuScreen(SuperFlu superflu) {
 		this.superflu = superflu;
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
@@ -65,7 +113,10 @@ public class MainMenuScreen implements Screen {
 		imgTitle.y = 360;
 		stage.addActor(imgTitle);
 		
-		stage.addActor(new PlayMono());
+		stage.addActor(new PlayMonoActor());
+		stage.addActor(new ExitActor());
+		stage.addActor(new OptionsActor());
+		stage.addActor(new AboutActor());
 		
 		Gdx.input.setInputProcessor(stage);
 	}

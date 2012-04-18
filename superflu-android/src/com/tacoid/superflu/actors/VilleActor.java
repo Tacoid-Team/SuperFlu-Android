@@ -129,13 +129,19 @@ public class VilleActor extends Actor {
 
 	@Override
 	public boolean touchDown(float x, float y, int pointer) {
-		System.out.println("touch down !" + ville);
+		TransitionCreator.getInstance().enable(this.x, this.y);
 		touched = true;
 		return true;
 	}
 	
 	@Override
+	public void touchDragged(float x, float y, int pointer) {
+		TransitionCreator.getInstance().updateTarget(this.x+x, this.y+y);
+	}
+	
+	@Override
 	public void touchUp(float x, float y, int pointer) {
+		TransitionCreator.getInstance().disable();
 		touched = false;
 	}
 }

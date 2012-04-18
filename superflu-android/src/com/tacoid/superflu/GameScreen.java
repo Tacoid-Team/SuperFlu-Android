@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.tacoid.superflu.actors.GlobalStatsActor;
+import com.tacoid.superflu.actors.TransitionCreator;
 import com.tacoid.superflu.actors.VilleActor;
 import com.tacoid.superflu.actors.ZoneActor;
 import com.tacoid.superflu.entities.Carte;
@@ -48,6 +49,8 @@ public class GameScreen implements Screen {
 		
 		stage.addActor(groupZones);
 		stage.addActor(groupVilles);
+		
+		stage.addActor(TransitionCreator.getInstance());
 	
 		createEntities();
 		Gdx.input.setInputProcessor(stage);

@@ -6,8 +6,8 @@ public class SuperFlu extends Game {
 
 	@Override
 	public void create() {
-		GameScreen gameScreen = new GameScreen(this);
-		setScreen(gameScreen);
+		MainMenuScreen menuScreen = new MainMenuScreen(this);
+		setScreen(menuScreen);
 	}
 
 }

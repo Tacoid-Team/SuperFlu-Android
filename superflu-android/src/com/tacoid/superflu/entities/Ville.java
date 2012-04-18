@@ -96,8 +96,6 @@ public class Ville implements Entity {
 	}
 
 	public void ajouteHabitantsInfectes(int habitantsInfectes) {
-		if (habitantsInfectes > 0)
-			System.out.println("ajoute habitants infectes : " + habitantsInfectes);
 		this.habitantsInfectes += habitantsInfectes;
 	}
 

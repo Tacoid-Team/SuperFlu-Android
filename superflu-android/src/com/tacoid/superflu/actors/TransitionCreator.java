@@ -58,6 +58,7 @@ public class TransitionCreator extends Actor {
 	        
 	        Gdx.gl11.glLineWidth(3);
 	        
+	        Gdx.gl11.glEnable(GL11.GL_BLEND);
 	        Gdx.gl11.glEnable(GL11.GL_TEXTURE_2D);
 	        arrow.setWrap( TextureWrap.Repeat, TextureWrap.Repeat );
 	        arrow.bind();
@@ -80,6 +81,7 @@ public class TransitionCreator extends Actor {
 	        
 	        Gdx.gl11.glPopMatrix();
 	        Gdx.gl11.glEnable(GL10.GL_TEXTURE_2D);
+	        Gdx.gl11.glDisable(GL11.GL_BLEND);
 		}
 	}
 

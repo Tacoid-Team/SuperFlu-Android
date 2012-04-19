@@ -29,6 +29,12 @@ public class TransitionCreator extends Actor {
 	Texture arrow;
 	float tex_offset = 0.0f;
 
+	private float norm;
+
+	private float ortho_x;
+
+	private float ortho_y;
+
 	public static TransitionCreator getInstance() {
         if (null == instance) {
             instance = new TransitionCreator();
@@ -47,11 +53,13 @@ public class TransitionCreator extends Actor {
 	
 	@Override
 	public void draw(SpriteBatch arg0, float arg1) {
-		float norm = (float) Math.sqrt((end_x-start_x)*(end_x-start_x)+(end_y-start_y)*(end_y-start_y));
-		norm = norm/6.0f;
-		float ortho_x = (end_y-start_y)/norm;
-		float ortho_y = -(end_x-start_x)/norm;
 		if(enabled) {
+			int l = 6;
+			int rayon = 20;
+			
+			float x = start_x + rayon*(end_x-start_x)/norm;
+			float y = start_y + rayon*(end_y-start_y)/norm;
+			
 			Gdx.gl11.glPushMatrix();
 	
 	        Gdx.gl11.glColor4f(1.0f, 1.0f, 1.0f, 1);
@@ -66,13 +74,13 @@ public class TransitionCreator extends Actor {
 	        renderer.begin(GL11.GL_TRIANGLE_STRIP);
 	        {
 	        		renderer.texCoord(0, -tex_offset);
-	                renderer.vertex( start_x-ortho_x, start_y-ortho_y,0);
-	                renderer.texCoord(0, norm/2-tex_offset);
-	                renderer.vertex( end_x-ortho_x, end_y-ortho_y, 0);
+	                renderer.vertex( x-l*ortho_x, y-l*ortho_y,0);
+	                renderer.texCoord(0, norm/(l*2)-tex_offset);
+	                renderer.vertex( end_x-l*ortho_x, end_y-l*ortho_y, 0);
 	                renderer.texCoord(1, -tex_offset);
-	                renderer.vertex( start_x+ortho_x, start_y+ortho_y,0);
-	                renderer.texCoord(1,norm/2-tex_offset);
-	                renderer.vertex( end_x+ortho_x, end_y+ortho_y, 0);
+	                renderer.vertex( x+l*ortho_x, y+l*ortho_y,0);
+	                renderer.texCoord(1,norm/(l*2)-tex_offset);
+	                renderer.vertex( end_x+l*ortho_x, end_y+l*ortho_y, 0);
 	        }
 	        renderer.end();
 	        tex_offset += 0.1f;
@@ -101,6 +109,10 @@ public class TransitionCreator extends Actor {
 	public void updateTarget(float x, float y) {
 		end_x = x;
 		end_y = y;
+		
+		norm = (float) Math.sqrt((end_x-start_x)*(end_x-start_x)+(end_y-start_y)*(end_y-start_y));
+		ortho_x = (end_y-start_y)/norm;
+		ortho_y = -(end_x-start_x)/norm;
 	}
 	
 	public void disable() {

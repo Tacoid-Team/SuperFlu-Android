@@ -2,6 +2,7 @@ package com.tacoid.superflu;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
 public class SuperFlu extends Game {
@@ -49,6 +50,8 @@ public class SuperFlu extends Game {
 		manager.load("images/transfert_arrow.png", Texture.class);
 		manager.load("images/usine.png", Texture.class);
 		manager.load("images/ville.png", Texture.class);
+		manager.load("music/soft.mp3", Music.class);
+		manager.load("music/hard.mp3", Music.class);
 	}
 	
 }

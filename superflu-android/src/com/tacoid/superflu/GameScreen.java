@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -55,6 +56,9 @@ public class GameScreen implements Screen {
 		
 		stage.addActor(TransitionCreator.getInstance());
 	
+		Music softMusic = superflu.manager.get("music/soft.mp3", Music.class);
+		softMusic.play();
+		
 		createEntities();
 		Gdx.input.setInputProcessor(stage);
 		

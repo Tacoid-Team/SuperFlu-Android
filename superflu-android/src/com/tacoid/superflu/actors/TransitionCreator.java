@@ -48,7 +48,7 @@ public class TransitionCreator extends Actor {
 	@Override
 	public void draw(SpriteBatch arg0, float arg1) {
 		float norm = (float) Math.sqrt((end_x-start_x)*(end_x-start_x)+(end_y-start_y)*(end_y-start_y));
-		norm = norm/4.0f;
+		norm = norm/6.0f;
 		float ortho_x = (end_y-start_y)/norm;
 		float ortho_y = -(end_x-start_x)/norm;
 		if(enabled) {
@@ -67,15 +67,15 @@ public class TransitionCreator extends Actor {
 	        {
 	        		renderer.texCoord(0, -tex_offset);
 	                renderer.vertex( start_x-ortho_x, start_y-ortho_y,0);
-	                renderer.texCoord(0, norm-tex_offset);
+	                renderer.texCoord(0, norm/2-tex_offset);
 	                renderer.vertex( end_x-ortho_x, end_y-ortho_y, 0);
 	                renderer.texCoord(1, -tex_offset);
 	                renderer.vertex( start_x+ortho_x, start_y+ortho_y,0);
-	                renderer.texCoord(1,norm-tex_offset);
+	                renderer.texCoord(1,norm/2-tex_offset);
 	                renderer.vertex( end_x+ortho_x, end_y+ortho_y, 0);
 	        }
 	        renderer.end();
-	        tex_offset += 0.2f;
+	        tex_offset += 0.1f;
 	        if(tex_offset >= 16.0f)
 	        	tex_offset = 0.0f;
 	        

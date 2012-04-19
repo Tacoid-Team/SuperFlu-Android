@@ -1,6 +1,5 @@
 package com.tacoid.superflu;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,7 +14,7 @@ public abstract class MenuIcon extends Actor {
 	
 	protected MenuIcon(String image, String text, int width, int height) {
 		this.text = text;
-		Texture texture = new Texture(Gdx.files.internal(image));
+		Texture texture = SuperFlu.getInstance().manager.get(image, Texture.class);
 		region = new TextureRegion(texture, width, height);
 		font = new BitmapFont();
 		this.width = width;

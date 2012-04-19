@@ -1,11 +1,11 @@
 package com.tacoid.superflu.actors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tacoid.superflu.SuperFlu;
 import com.tacoid.superflu.entities.Zone;
 
 public class ZoneActor extends Actor {
@@ -15,8 +15,8 @@ public class ZoneActor extends Actor {
 	
 	public ZoneActor(Zone zone) {
 		this.zone = zone;
-		
-		zoneTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("images/carte_zone" + zone.getId() + ".png")), 1024, 544);
+		SuperFlu superflu = SuperFlu.getInstance();
+		zoneTextureRegion = new TextureRegion(superflu.manager.get("images/carte_zone" + zone.getId() + ".png", Texture.class), 1024, 544);
 	}
 	
 	@Override

@@ -8,6 +8,6 @@ public class SuperFluAndroid extends AndroidApplication
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initialize(new SuperFlu(), false);
+        initialize(SuperFlu.getInstance(), false);
     }
 }

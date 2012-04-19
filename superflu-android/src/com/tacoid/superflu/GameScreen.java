@@ -24,24 +24,27 @@ import com.tacoid.superflu.entities.Zone;
 public class GameScreen implements Screen {
 	private static final int VIRTUAL_WIDTH = 1024;
 	private static final int VIRTUAL_HEIGHT = 576;
+	private static GameScreen instance;
 
 	private Stage stage;
 	private Group groupZones;
 	private Group groupVilles;
 	private GameLogic gameLogic;
+	private SuperFlu superflu;
 
-	public GameScreen(SuperFlu superflu) {
+	private GameScreen() {
+		this.superflu = SuperFlu.getInstance();
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		groupZones = new Group();
 		groupVilles = new Group();
 	
-		Texture backgroundTexture = new Texture(Gdx.files.internal("images/fond_carte.png"));
+		Texture backgroundTexture = superflu.manager.get("images/fond_carte.png", Texture.class);
 		TextureRegion backgroundTextureRegion = new TextureRegion(backgroundTexture, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		Image imgBackground = new Image(backgroundTextureRegion);
 		imgBackground.touchable = false;
 		stage.addActor(imgBackground);
 		
-		Texture carteTexture = new Texture(Gdx.files.internal("images/carte.png"));
+		Texture carteTexture = superflu.manager.get("images/carte.png", Texture.class);
 		TextureRegion carteTextureRegion = new TextureRegion(carteTexture, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		Image carte = new Image(carteTextureRegion);
 		carte.touchable = false;
@@ -58,6 +61,13 @@ public class GameScreen implements Screen {
 		stage.addActor(new GlobalStatsActor(gameLogic));
 	}
 
+	public static GameScreen getInstance() {
+		if (instance == null) {
+			instance = new GameScreen();
+		}
+		return instance;
+	}
+	
 	@Override
 	public void resume() {
 

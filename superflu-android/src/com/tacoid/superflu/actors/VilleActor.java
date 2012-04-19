@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer10;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tacoid.superflu.SuperFlu;
 import com.tacoid.superflu.entities.Ville;
 
 public class VilleActor extends Actor {
@@ -19,17 +20,18 @@ public class VilleActor extends Actor {
 	private TextureRegion infected, infected2;
 
 	public VilleActor(Ville ville) {
+		SuperFlu superflu = SuperFlu.getInstance();
 		this.ville = ville;
-		infected = new TextureRegion(new Texture(Gdx.files.internal("images/infected.png")), 20, 20);
-		infected2 = new TextureRegion(new Texture(Gdx.files.internal("images/infected2.png")), 20, 20);
+		infected = new TextureRegion(superflu.manager.get("images/infected.png", Texture.class), 20, 20);
+		infected2 = new TextureRegion(superflu.manager.get("images/infected2.png", Texture.class), 20, 20);
 		if (ville.isUsine()) {
-			villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("images/usine.png")), 25, 20);
-			villeTextureRegionHL = new TextureRegion(new Texture(Gdx.files.internal("images/HL_usine.png")), 25, 20);
+			villeTextureRegion = new TextureRegion(superflu.manager.get("images/usine.png", Texture.class), 25, 20);
+			villeTextureRegionHL = new TextureRegion(superflu.manager.get("images/HL_usine.png", Texture.class), 25, 20);
 			this.width = 25;
 			this.height = 20;
 		} else {
-			villeTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("images/ville.png")), 20, 20);
-			villeTextureRegionHL = new TextureRegion(new Texture(Gdx.files.internal("images/HL_ville.png")), 20, 20);
+			villeTextureRegion = new TextureRegion(superflu.manager.get("images/ville.png", Texture.class), 20, 20);
+			villeTextureRegionHL = new TextureRegion(superflu.manager.get("images/HL_ville.png", Texture.class), 20, 20);
 			this.width = 20;
 			this.height = 20;
 		}

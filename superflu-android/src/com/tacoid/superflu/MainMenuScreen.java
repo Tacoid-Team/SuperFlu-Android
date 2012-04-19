@@ -13,16 +13,44 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class MainMenuScreen implements Screen {
 	private static final int VIRTUAL_WIDTH = 1024;
 	private static final int VIRTUAL_HEIGHT = 576;
+	private static MainMenuScreen instance = null;
 	
 	private Stage stage;
-	final private SuperFlu superflu;
+	private final SuperFlu superflu;
+	
+	private MainMenuScreen() {
+		this.superflu = SuperFlu.getInstance();
+		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+		
+		Texture backgroundTexture = superflu.manager.get("images/fond_carte.png", Texture.class);
+		TextureRegion backgroundTextureRegion = new TextureRegion(backgroundTexture, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		Image imgBackground = new Image(backgroundTextureRegion);
+		imgBackground.touchable = false;
+		stage.addActor(imgBackground);
+		
+		Texture titleTexture = superflu.manager.get("images/superflu.png", Texture.class);
+		TextureRegion titleTextureRegion = new TextureRegion(titleTexture, 815, 175);
+		Image imgTitle = new Image(titleTextureRegion);
+		imgTitle.touchable = false;
+		imgTitle.x = 105;
+		imgTitle.y = 360;
+		stage.addActor(imgTitle);
+		
+		stage.addActor(new PlayMonoActor());
+		stage.addActor(new ExitActor());
+		stage.addActor(new OptionsActor());
+		stage.addActor(new AboutActor());
+		
+		Gdx.input.setInputProcessor(stage);
+	}
+	
 
 	private class PlayMonoActor extends Actor {
 
 		private TextureRegion region;
 
 		public PlayMonoActor() {
-			Texture texture = new Texture(Gdx.files.internal("images/jouer.png"));
+			Texture texture = superflu.manager.get("images/jouer.png", Texture.class);
 			region = new TextureRegion(texture, 303, 79);
 			x = 361;
 			y = 248;
@@ -42,7 +70,7 @@ public class MainMenuScreen implements Screen {
 		
 		@Override
 		public boolean touchDown(float x, float y, int pointer) {
-			superflu.setScreen(new GameScreen(superflu));
+			superflu.setScreen(GameScreen.getInstance());
 			return true;
 		}
 	}
@@ -95,31 +123,6 @@ public class MainMenuScreen implements Screen {
 		
 	}
 	
-	public MainMenuScreen(SuperFlu superflu) {
-		this.superflu = superflu;
-		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-		
-		Texture backgroundTexture = new Texture(Gdx.files.internal("images/fond_carte.png"));
-		TextureRegion backgroundTextureRegion = new TextureRegion(backgroundTexture, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-		Image imgBackground = new Image(backgroundTextureRegion);
-		imgBackground.touchable = false;
-		stage.addActor(imgBackground);
-		
-		Texture titleTexture = new Texture(Gdx.files.internal("images/superflu.png"));
-		TextureRegion titleTextureRegion = new TextureRegion(titleTexture, 815, 175);
-		Image imgTitle = new Image(titleTextureRegion);
-		imgTitle.touchable = false;
-		imgTitle.x = 105;
-		imgTitle.y = 360;
-		stage.addActor(imgTitle);
-		
-		stage.addActor(new PlayMonoActor());
-		stage.addActor(new ExitActor());
-		stage.addActor(new OptionsActor());
-		stage.addActor(new AboutActor());
-		
-		Gdx.input.setInputProcessor(stage);
-	}
 	
 	@Override
 	public void dispose() {
@@ -162,6 +165,13 @@ public class MainMenuScreen implements Screen {
 	public void show() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public static MainMenuScreen getInstance() {
+		if (instance == null) {
+			instance = new MainMenuScreen();
+		}
+		return instance;
 	}
 
 }

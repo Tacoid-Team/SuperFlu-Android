@@ -30,6 +30,7 @@ public class SuperFlu extends Game {
 		manager = new AssetManager();
 		
 		manager.load("images/about.png", Texture.class);
+		manager.load("images/aide.png", Texture.class);
 		manager.load("images/avion.png", Texture.class);
 		manager.load("images/carte_zone1.png", Texture.class);
 		manager.load("images/carte_zone2.png", Texture.class);
@@ -44,12 +45,13 @@ public class SuperFlu extends Game {
 		manager.load("images/HL_ville.png", Texture.class);
 		manager.load("images/infected.png", Texture.class);
 		manager.load("images/infected2.png", Texture.class);
-		manager.load("images/jouer.png", Texture.class);
 		manager.load("images/options.png", Texture.class);
 		manager.load("images/superflu.png", Texture.class);
 		manager.load("images/transfert_arrow.png", Texture.class);
 		manager.load("images/usine.png", Texture.class);
 		manager.load("images/ville.png", Texture.class);
+		manager.load("images/mono.png", Texture.class);
+		manager.load("images/multi.png", Texture.class);
 		manager.load("music/soft.mp3", Music.class);
 		manager.load("music/hard.mp3", Music.class);
 	}

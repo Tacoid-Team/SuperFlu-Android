@@ -37,6 +37,8 @@ public class MainMenuScreen implements Screen {
 		stage.addActor(imgTitle);
 		
 		stage.addActor(new PlayMonoActor());
+		stage.addActor(new PlayMultiActor());
+		stage.addActor(new HelpActor());
 		stage.addActor(new ExitActor());
 		stage.addActor(new OptionsActor());
 		stage.addActor(new AboutActor());
@@ -50,12 +52,12 @@ public class MainMenuScreen implements Screen {
 		private TextureRegion region;
 
 		public PlayMonoActor() {
-			Texture texture = superflu.manager.get("images/jouer.png", Texture.class);
-			region = new TextureRegion(texture, 303, 79);
-			x = 361;
+			Texture texture = superflu.manager.get("images/mono.png", Texture.class);
+			region = new TextureRegion(texture, 336, 80);
+			x = 344;
 			y = 248;
-			width = 303;
-			height = 79;
+			width = 336;
+			height = 80;
 		}
 		
 		@Override
@@ -74,6 +76,67 @@ public class MainMenuScreen implements Screen {
 			return true;
 		}
 	}
+	
+	private class PlayMultiActor extends Actor {
+
+		private TextureRegion region;
+
+		public PlayMultiActor() {
+			Texture texture = superflu.manager.get("images/multi.png", Texture.class);
+			region = new TextureRegion(texture, 368, 80);
+			x = 345;
+			y = 151;
+			width = 368;
+			height = 80;
+		}
+		
+		@Override
+		public void draw(SpriteBatch batch, float alpha) {
+			batch.draw(region, x, y);
+		}
+
+		@Override
+		public Actor hit(float x, float y) {
+			return x >= 0 && x <= width && y >= 0 && y <= height ? this : null;
+		}
+		
+		@Override
+		public boolean touchDown(float x, float y, int pointer) {
+			superflu.setScreen(GameScreen.getInstance());
+			return true;
+		}
+	}
+	
+	private class HelpActor extends Actor {
+
+		private TextureRegion region;
+
+		public HelpActor() {
+			Texture texture = superflu.manager.get("images/aide.png", Texture.class);
+			region = new TextureRegion(texture, 239, 80);
+			x = 345;
+			y = 54;
+			width = 239;
+			height = 80;
+		}
+		
+		@Override
+		public void draw(SpriteBatch batch, float alpha) {
+			batch.draw(region, x, y);
+		}
+
+		@Override
+		public Actor hit(float x, float y) {
+			return x >= 0 && x <= width && y >= 0 && y <= height ? this : null;
+		}
+		
+		@Override
+		public boolean touchDown(float x, float y, int pointer) {
+			superflu.setScreen(HelpScreen.getInstance());
+			return true;
+		}
+	}
+	
 	
 	private class ExitActor extends MenuIcon {
 		

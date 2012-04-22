@@ -29,8 +29,12 @@ public class Usine extends Ville {
 	}
 	
 	public void update(float delta) {
-		super.update(delta);
-		produit(0); //XXX: populationInfectee.
+		//super.update(delta);
+		int infectes = 0;
+		for(Ville v : this.zone.getVilles()) {
+			infectes += v.getHabitantsInfectes();
+		}
+		produit(infectes); //XXX: populationInfectee.
 	}
 	
 	public boolean isUsine() {

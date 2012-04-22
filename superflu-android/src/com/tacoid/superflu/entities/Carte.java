@@ -71,12 +71,14 @@ public class Carte implements Entity {
 	private void migrations(float delta) {
 		for (Zone z1 : zones) {
 			for (Ville v1 : z1.getVilles()) {
+				if(v1.isUsine()) continue;
 				if (v1.getHabitants() == 0) continue;
 				double taux_sain = (double)v1.getHabitantsSains() / v1.getHabitants();
 				double taux_infection = (double)v1.getHabitantsInfectes() / v1.getHabitants();
 				double taux_immunisation = (double)v1.getHabitantsImmunises() / v1.getHabitants();
 				for (Zone z2 : zones) {
 					for (Ville v2 : z2.getVilles()) {
+						if(v2.isUsine()) continue;
 						if (v1 == v2) continue;
 						double d = Ville.distance_carre(v1, v2);
 

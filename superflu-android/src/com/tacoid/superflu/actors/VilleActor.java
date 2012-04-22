@@ -43,29 +43,33 @@ public class VilleActor extends Actor {
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
+		float p;
+		
 		Gdx.gl11.glDisable(GL10.GL_TEXTURE_2D);
 		Gdx.gl11.glPushMatrix();
 		Gdx.gl11.glTranslatef(x, y, 0);
 
-		// On dessine la barre de contamination
-		Gdx.gl11.glColor4f(0, 0, 0, 1);
-		Gdx.gl11.glLineWidth(6);
-		renderer.begin(GL10.GL_LINES);
-		{
-			renderer.vertex( -width/2 - 1, -height/2 - 3, 0);
-			renderer.vertex( width/2 + 1, -height/2 - 3, 0);
+		if(!ville.isUsine()) {
+			// On dessine la barre de contamination
+			Gdx.gl11.glColor4f(0, 0, 0, 1);
+			Gdx.gl11.glLineWidth(6);
+			renderer.begin(GL10.GL_LINES);
+			{
+				renderer.vertex( -width/2 - 1, -height/2 - 3, 0);
+				renderer.vertex( width/2 + 1, -height/2 - 3, 0);
+			}
+			renderer.end();
+			
+			p = (float)ville.getPourcentageInfectes()/100.0f;
+			Gdx.gl11.glColor4f(p, 1-p, 0, 1);
+			Gdx.gl11.glLineWidth(4);
+			renderer.begin(GL10.GL_LINES);
+			{
+				renderer.vertex( -width/2, -height/2 - 3, 0);
+				renderer.vertex( -width/2 + p*width , -height/2 - 3, 0);
+			}
+			renderer.end();
 		}
-		renderer.end();
-		
-		float p = (float)ville.getPourcentageInfectes()/100.0f;
-		Gdx.gl11.glColor4f(p, 1-p, 0, 1);
-		Gdx.gl11.glLineWidth(4);
-		renderer.begin(GL10.GL_LINES);
-		{
-			renderer.vertex( -width/2, -height/2 - 3, 0);
-			renderer.vertex( -width/2 + p*width , -height/2 - 3, 0);
-		}
-		renderer.end();
 		
 		// -----
 		

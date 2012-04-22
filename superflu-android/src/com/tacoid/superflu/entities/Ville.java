@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Ville implements Entity {
 
-	private Zone zone;
+	protected Zone zone;
 	protected String nom;
 	protected int x;
 	protected int y;

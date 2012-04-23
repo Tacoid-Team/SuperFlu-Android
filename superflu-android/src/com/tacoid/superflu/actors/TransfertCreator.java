@@ -10,10 +10,10 @@ import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer10;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tacoid.superflu.GameScreen;
 
-public class TransitionCreator extends Actor {
+public class TransfertCreator extends Actor {
 	
 	/* Singleton Instance */
-	static TransitionCreator instance = null;
+	static TransfertCreator instance = null;
 	
 	private float start_x = 0;
 	private float start_y = 0;
@@ -38,14 +38,14 @@ public class TransitionCreator extends Actor {
 	
 	private final float target_size = 30.0f;
 
-	public static TransitionCreator getInstance() {
+	public static TransfertCreator getInstance() {
         if (null == instance) {
-            instance = new TransitionCreator();
+            instance = new TransfertCreator();
         }
         return instance;
     }
 	
-	private TransitionCreator() {
+	private TransfertCreator() {
 		this.x = 0;
 		this.y = 0;
 		this.width = Gdx.graphics.getWidth();

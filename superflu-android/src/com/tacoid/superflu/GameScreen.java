@@ -184,5 +184,13 @@ public class GameScreen implements Screen {
 		
 		return null;
 	}
+
+	public Group getGroupZones() {
+		return groupZones;
+	}
+
+	public Group getGroupVilles() {
+		return groupVilles;
+	}
 	
 }

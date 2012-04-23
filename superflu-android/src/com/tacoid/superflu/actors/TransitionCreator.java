@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer10;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tacoid.superflu.GameScreen;
 
 public class TransitionCreator extends Actor {
 	
@@ -31,6 +32,11 @@ public class TransitionCreator extends Actor {
 	private float ortho_x;
 
 	private float ortho_y;
+	
+	private VilleActor dest_ville = null;
+	private VilleActor start_ville = null;
+	
+	private final float target_size = 30.0f;
 
 	public static TransitionCreator getInstance() {
         if (null == instance) {
@@ -48,45 +54,68 @@ public class TransitionCreator extends Actor {
 		arrow = new Texture(Gdx.files.internal("images/transfert_arrow.png"));
     }
 	
+	private void drawTarget() {
+        if(dest_ville != null) {
+	        Gdx.gl11.glDisable(GL11.GL_TEXTURE_2D);
+	        Gdx.gl11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	        
+	        renderer.begin(GL11.GL_LINE_LOOP);
+	        {
+	        	renderer.vertex(dest_ville.x + target_size , dest_ville.y, 0);
+	        	renderer.vertex(dest_ville.x, dest_ville.y + target_size , 0);
+	        	renderer.vertex(dest_ville.x - target_size , dest_ville.y, 0);
+	        	renderer.vertex(dest_ville.x, dest_ville.y- target_size , 0);
+	        }
+	        renderer.end();
+	        
+	        Gdx.gl11.glEnable(GL10.GL_TEXTURE_2D);
+        }	
+	}
+	
+	private void drawTransfertBar() {
+		int l = 6;
+		int rayon = 20;
+		
+		float x = start_x + rayon*(end_x-start_x)/norm;
+		float y = start_y + rayon*(end_y-start_y)/norm;
+		
+		Gdx.gl11.glPushMatrix();
+
+        Gdx.gl11.glColor4f(1.0f, 1.0f, 1.0f, 1);
+        
+        Gdx.gl11.glLineWidth(3);
+        
+        Gdx.gl11.glEnable(GL11.GL_BLEND);
+        Gdx.gl11.glEnable(GL11.GL_TEXTURE_2D);
+        arrow.setWrap( TextureWrap.Repeat, TextureWrap.Repeat );
+        arrow.bind();
+        
+        renderer.begin(GL11.GL_TRIANGLE_STRIP);
+        {
+        		renderer.texCoord(0, -tex_offset);
+                renderer.vertex( x-l*ortho_x, y-l*ortho_y,0);
+                renderer.texCoord(0, norm/(l*2)-tex_offset);
+                renderer.vertex( end_x-l*ortho_x, end_y-l*ortho_y, 0);
+                renderer.texCoord(1, -tex_offset);
+                renderer.vertex( x+l*ortho_x, y+l*ortho_y,0);
+                renderer.texCoord(1,norm/(l*2)-tex_offset);
+                renderer.vertex( end_x+l*ortho_x, end_y+l*ortho_y, 0);
+        }
+        renderer.end();
+        tex_offset += 0.1f;
+        if(tex_offset >= 16.0f)
+        	tex_offset = 0.0f;
+        
+        Gdx.gl11.glEnable(GL10.GL_TEXTURE_2D);
+        Gdx.gl11.glDisable(GL11.GL_BLEND);
+        Gdx.gl11.glPopMatrix();	
+	}
+	
 	@Override
 	public void draw(SpriteBatch arg0, float arg1) {
 		if(enabled) {
-			int l = 6;
-			int rayon = 20;
-			
-			float x = start_x + rayon*(end_x-start_x)/norm;
-			float y = start_y + rayon*(end_y-start_y)/norm;
-			
-			Gdx.gl11.glPushMatrix();
-	
-	        Gdx.gl11.glColor4f(1.0f, 1.0f, 1.0f, 1);
-	        
-	        Gdx.gl11.glLineWidth(3);
-	        
-	        Gdx.gl11.glEnable(GL11.GL_BLEND);
-	        Gdx.gl11.glEnable(GL11.GL_TEXTURE_2D);
-	        arrow.setWrap( TextureWrap.Repeat, TextureWrap.Repeat );
-	        arrow.bind();
-	        
-	        renderer.begin(GL11.GL_TRIANGLE_STRIP);
-	        {
-	        		renderer.texCoord(0, -tex_offset);
-	                renderer.vertex( x-l*ortho_x, y-l*ortho_y,0);
-	                renderer.texCoord(0, norm/(l*2)-tex_offset);
-	                renderer.vertex( end_x-l*ortho_x, end_y-l*ortho_y, 0);
-	                renderer.texCoord(1, -tex_offset);
-	                renderer.vertex( x+l*ortho_x, y+l*ortho_y,0);
-	                renderer.texCoord(1,norm/(l*2)-tex_offset);
-	                renderer.vertex( end_x+l*ortho_x, end_y+l*ortho_y, 0);
-	        }
-	        renderer.end();
-	        tex_offset += 0.1f;
-	        if(tex_offset >= 16.0f)
-	        	tex_offset = 0.0f;
-	        
-	        Gdx.gl11.glPopMatrix();
-	        Gdx.gl11.glEnable(GL10.GL_TEXTURE_2D);
-	        Gdx.gl11.glDisable(GL11.GL_BLEND);
+			drawTransfertBar();
+			drawTarget();
 		}
 	}
 
@@ -101,6 +130,8 @@ public class TransitionCreator extends Actor {
 		start_y = y;
 		end_x = x;
 		end_y = y;
+		
+		start_ville = (VilleActor) GameScreen.getInstance().getGroupVilles().hit(start_x, start_y);
 	}
 	
 	public void updateTarget(float x, float y) {
@@ -110,9 +141,16 @@ public class TransitionCreator extends Actor {
 		norm = (float) Math.sqrt((end_x-start_x)*(end_x-start_x)+(end_y-start_y)*(end_y-start_y));
 		ortho_x = (end_y-start_y)/norm;
 		ortho_y = -(end_x-start_x)/norm;
+		
+		/*XXX: Je compare des références, c'est peut être pas top... */
+		if((VilleActor) GameScreen.getInstance().getGroupVilles().hit(end_x, end_y) != start_ville) {
+			dest_ville = (VilleActor) GameScreen.getInstance().getGroupVilles().hit(end_x, end_y);
+		}
 	}
 	
 	public void disable() {
+		start_ville = null;
+		dest_ville = null;
 		enabled = false;
 	}
 

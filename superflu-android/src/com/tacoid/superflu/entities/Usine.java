@@ -15,7 +15,6 @@ public class Usine extends Ville {
 		productionRateTraitements = (int) (5 + 0.2 * Math
 				.sqrt(populationInfectee));
 		productionRateVaccins = (int) (Math.sqrt(populationInfectee));
-
 		ajouteStockTraitement(productionRateTraitements);
 		ajouteStockVaccin(productionRateVaccins);
 	}
@@ -28,7 +27,7 @@ public class Usine extends Ville {
 		this.productionRateVaccins = productionRateVaccins;
 	}
 	
-	public void update(float delta) {
+	public void update(int delta) {
 		//super.update(delta);
 		int infectes = 0;
 		for(Ville v : this.zone.getVilles()) {

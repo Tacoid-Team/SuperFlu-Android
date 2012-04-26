@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.tacoid.superflu.actors.GlobalStatsActor;
-import com.tacoid.superflu.actors.TransitionCreator;
+import com.tacoid.superflu.actors.TransfertCreator;
 import com.tacoid.superflu.actors.VilleActor;
 import com.tacoid.superflu.actors.ZoneActor;
 import com.tacoid.superflu.entities.Carte;
@@ -54,7 +54,7 @@ public class GameScreen implements Screen {
 		stage.addActor(groupZones);
 		stage.addActor(groupVilles);
 		
-		stage.addActor(TransitionCreator.getInstance());
+		stage.addActor(TransfertCreator.getInstance());
 	
 		Music softMusic = superflu.manager.get("music/soft.mp3", Music.class);
 		softMusic.play();
@@ -89,13 +89,17 @@ public class GameScreen implements Screen {
 		GL10 gl = Gdx.graphics.getGL10();
 
 		// Update model
-		gameLogic.update(delta);
+		gameLogic.update((int)(delta*1000.0f));
 
 		// clear previous frame
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		stage.act(delta);
 		stage.draw();
+	}
+
+	public GameLogic getGameLogic() {
+		return gameLogic;
 	}
 
 	@Override

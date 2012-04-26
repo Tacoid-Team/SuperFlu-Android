@@ -54,7 +54,7 @@ public class Carte implements Entity {
 		return zones;
 	}
 
-	public void update(float delta) {
+	public void update(int delta) {
 		if (counter >= 10) {
 			for (Zone zone : zones) {
 				zone.update(counter * delta);
@@ -68,7 +68,7 @@ public class Carte implements Entity {
 	
 	
 	
-	private void migrations(float delta) {
+	private void migrations(int delta) {
 		for (Zone z1 : zones) {
 			for (Ville v1 : z1.getVilles()) {
 				if(v1.isUsine()) continue;
@@ -82,7 +82,7 @@ public class Carte implements Entity {
 						if (v1 == v2) continue;
 						double d = Ville.distance_carre(v1, v2);
 
-						double flux = Math.floor((Math.random() * v1.getHabitants() * TAUX_MIGRATION) / (d + 3 * this.gameLogic.getPopulationInfectee()) * delta);
+						double flux = Math.floor((Math.random() * v1.getHabitants() * TAUX_MIGRATION) / (d + 3 * this.gameLogic.getPopulationInfectee()) * delta/1000.0f);
 						double flux_sain = Math.floor(taux_sain * flux);
 						double flux_infecte = Math.floor(taux_infection * flux);
 						double flux_immunise = Math.floor(taux_immunisation * flux);

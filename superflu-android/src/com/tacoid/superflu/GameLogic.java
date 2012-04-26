@@ -1,8 +1,14 @@
 package com.tacoid.superflu;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.locks.ReentrantLock;
 
 import com.tacoid.superflu.entities.Carte;
+import com.tacoid.superflu.entities.Transfert;
 import com.tacoid.superflu.entities.Ville;
 import com.tacoid.superflu.entities.Zone;
 
@@ -14,8 +20,18 @@ public class GameLogic {
 	private int populationMondiale = 0;
 	private int populationMorte = 0;
 	
+	private List<Transfert> transferts;
+	private Transfert newTransfert;
+	
 	private Carte carte;
 	
+	private long time;
+
+	public GameLogic() {
+		transferts = Collections.synchronizedList(new ArrayList<Transfert>());
+		newTransfert = null;
+	}
+
 	public enum EtatJeu {
 		WAIT, EN_COURS, GAGNE, PERDU
 	};
@@ -49,7 +65,10 @@ public class GameLogic {
 		randVille.ajouteHabitantsInfectes(2000);
 	}
 	
-	public void update(float delta) {
+	public void update(int delta) {
+		/* Increase game time */
+		time += delta;
+		
 		if (this.etat == EtatJeu.WAIT) {
 			creerEpidemie();
 			this.etat = EtatJeu.EN_COURS;
@@ -57,10 +76,29 @@ public class GameLogic {
 			updatePopulation();
 			this.carte.update(delta);
 			
+			if(newTransfert != null) {
+				transferts.add(newTransfert);
+				newTransfert = null;
+			}
+
+			Iterator<Transfert> it = transferts.iterator();
+			while (it.hasNext()) {
+				Transfert t = it.next();
+				t.update(delta);
+				if (time > t.getTempsArrivee()) {
+					t.finish();
+					it.remove();
+				}
+			}
+			
 			if (this.populationMorte > (this.populationMondiale + this.populationMorte)*POURCENTAGE_ECHEC) {
 				this.etat = EtatJeu.PERDU;
 			}
 		}
+	}
+	
+	public void addTransfert(Transfert transfert) {
+		newTransfert = transfert;
 	}
 	
 	public boolean isPandemic() {
@@ -77,5 +115,9 @@ public class GameLogic {
 
 	public int getPopulationMorte() {
 		return populationMorte;
+	}
+
+	public long getTime() {
+		return time;
 	}
 }

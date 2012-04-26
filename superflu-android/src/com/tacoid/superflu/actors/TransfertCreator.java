@@ -9,11 +9,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer10;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tacoid.superflu.GameScreen;
+import com.tacoid.superflu.entities.Transfert;
 
 public class TransfertCreator extends Actor {
 	
 	/* Singleton Instance */
 	static TransfertCreator instance = null;
+	
+	ImmediateModeRenderer10 renderer;
 	
 	private float start_x = 0;
 	private float start_y = 0;
@@ -21,8 +24,6 @@ public class TransfertCreator extends Actor {
 	private float end_y = 0;
 	
 	private boolean enabled = false;
-	
-	ImmediateModeRenderer10 renderer;
 	
 	Texture arrow;
 	float tex_offset = 0.0f;
@@ -36,7 +37,7 @@ public class TransfertCreator extends Actor {
 	private VilleActor dest_ville = null;
 	private VilleActor start_ville = null;
 	
-	private final float target_size = 30.0f;
+	private static final float target_size = 30.0f;
 
 	public static TransfertCreator getInstance() {
         if (null == instance) {
@@ -132,6 +133,7 @@ public class TransfertCreator extends Actor {
 		end_y = y;
 		
 		start_ville = (VilleActor) GameScreen.getInstance().getGroupVilles().hit(start_x, start_y);
+		System.out.println(start_ville.getVille().getStockTraitements());
 	}
 	
 	public void updateTarget(float x, float y) {
@@ -149,13 +151,16 @@ public class TransfertCreator extends Actor {
 	}
 	
 	public void disable() {
+		if(start_ville != null && dest_ville != null) {
+			GameScreen.getInstance().getGameLogic().addTransfert(new Transfert(start_ville.getVille(), 
+																			   dest_ville.getVille(), 
+																			   start_ville.getVille().getStockTraitements(), 
+																			   0, 
+																			   GameScreen.getInstance().getGameLogic().getTime()));
+		}
 		start_ville = null;
 		dest_ville = null;
 		enabled = false;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
 	}
 
 }

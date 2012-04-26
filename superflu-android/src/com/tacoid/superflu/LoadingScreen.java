@@ -56,8 +56,6 @@ public class LoadingScreen implements Screen {
 
 	@Override
 	public void resize(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

@@ -139,19 +139,19 @@ public class VilleActor extends Actor {
 
 	@Override
 	public boolean touchDown(float x, float y, int pointer) {
-		TransitionCreator.getInstance().enable(this.x, this.y);
+		TransfertCreator.getInstance().enable(this.x, this.y);
 		touched = true;
 		return true;
 	}
 	
 	@Override
 	public void touchDragged(float x, float y, int pointer) {
-		TransitionCreator.getInstance().updateTarget(this.x+x, this.y+y);
+		TransfertCreator.getInstance().updateTarget(this.x+x, this.y+y);
 	}
 	
 	@Override
 	public void touchUp(float x, float y, int pointer) {
-		TransitionCreator.getInstance().disable();
+		TransfertCreator.getInstance().disable();
 		touched = false;
 	}
 }

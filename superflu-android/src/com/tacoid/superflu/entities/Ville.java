@@ -70,6 +70,20 @@ public class Ville implements Entity {
 			stockTraitements = stockTraitementsMax;
 		}
 	}
+	
+	public void retireStockVaccin(int quantite) {
+		stockVaccins -= quantite;
+		if (stockVaccins < 0) {
+			stockVaccins = 0;
+		}
+	}
+	
+	public void retireStockTraitement(int quantite) {
+		stockTraitements -= quantite;
+		if (stockTraitements < 0) {
+			stockTraitements = 0;
+		}
+	}
 
 	public String getNom() {
 		return nom;
@@ -139,19 +153,19 @@ public class Ville implements Entity {
 	/**
 	 * Mise à jour des données de la ville.
 	 */
-	public void update(float delta) {
+	public void update(int delta) {
 		double transmission = 0.025;
 		double perteImmunite = 0.00001;
 		double mortalite = 0.000005;
 		
-		this.stockVaccins = (int) Math.round(this.stockVaccins * Math.pow(0.995, Math.floor(delta / 10)));
-		this.stockTraitements = (int) Math.round(this.stockTraitements * Math.pow(0.997, Math.floor(delta / 10)));
+		this.stockVaccins = (int) Math.round(this.stockVaccins * Math.pow(0.995, Math.floor(delta / 10000.0f)));
+		this.stockTraitements = (int) Math.round(this.stockTraitements * Math.pow(0.997, Math.floor(delta / 10000.0f)));
 		
 		if (getHabitants() > 0) {
 			
 			// Infection :
 			if (habitantsInfectes > 0) {
-				double nouveauxHabitantsInfectes = (habitantsInfectes * transmission * ((double) habitantsSains / getHabitants())) * delta;
+				double nouveauxHabitantsInfectes = (habitantsInfectes * transmission * ((double) habitantsSains / getHabitants())) * delta/1000.0f;
 				if (nouveauxHabitantsInfectes >= 1) {
 					habitantsSains -= nouveauxHabitantsInfectes;
 					habitantsInfectes += nouveauxHabitantsInfectes;

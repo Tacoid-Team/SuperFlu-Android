@@ -1,17 +1,23 @@
 package com.tacoid.superflu.entities;
 
+import com.tacoid.superflu.GameScreen;
+import com.tacoid.superflu.actors.TransfertActor;
+
 public class Transfert implements Entity {
 	
-	private final static float VITESSE = 0.8f;
+	private final static float VITESSE = 0.2f;
 
 	private final Ville depart;
 	private final Ville arrivee;
 	private final long temps_depart; // ms
+
 	private final long temps_arrivee; // ms
 	private final boolean direct;
 	
 	private final int stock_traitement;
 	private final int stock_vaccin;
+	
+	private final TransfertActor actor;
 
 	public Transfert(Ville depart, Ville arrivee, int traitement, int vaccin, long temps_depart) {
 		this.depart = depart;
@@ -32,7 +38,10 @@ public class Transfert implements Entity {
 			this.temps_arrivee = temps_depart + (long)(Math.sqrt(d1) / VITESSE);
 		} else {
 			this.temps_arrivee = temps_depart + (long)(Math.sqrt(d2) / VITESSE);
-		}	
+		}
+		
+		actor = new TransfertActor(this);
+		GameScreen.getInstance().addTransfert(actor);
 	}
 	
 	@Override
@@ -43,6 +52,8 @@ public class Transfert implements Entity {
 	public void finish() {
 		arrivee.ajouteStockTraitement(stock_traitement);
 		depart.ajouteStockTraitement(stock_vaccin);
+		
+		GameScreen.getInstance().removeTransfert(actor);
 	}
 
 	
@@ -60,6 +71,10 @@ public class Transfert implements Entity {
 
 	public boolean isDirect() {
 		return direct;
+	}
+	
+	public long getTempsDepart() {
+		return temps_depart;
 	}
 
 	public long getTempsArrivee() {

@@ -15,9 +15,6 @@ public class VilleActor extends Actor {
 	private TextureRegion villeTextureRegion;
 	private TextureRegion villeTextureRegionHL;
 	private Ville ville;
-	public Ville getVille() {
-		return ville;
-	}
 
 	private ImmediateModeRenderer10 renderer;
 	private boolean touched;
@@ -154,4 +151,9 @@ public class VilleActor extends Actor {
 		TransfertCreator.getInstance().disable();
 		touched = false;
 	}
+	
+	public Ville getVille() {
+		return ville;
+	}
+
 }

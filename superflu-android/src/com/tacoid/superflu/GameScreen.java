@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.tacoid.superflu.actors.GlobalStatsActor;
+import com.tacoid.superflu.actors.TransfertActor;
 import com.tacoid.superflu.actors.TransfertCreator;
 import com.tacoid.superflu.actors.VilleActor;
 import com.tacoid.superflu.actors.ZoneActor;
@@ -30,6 +31,7 @@ public class GameScreen implements Screen {
 	private Stage stage;
 	private Group groupZones;
 	private Group groupVilles;
+	private Group groupTransferts;
 	private GameLogic gameLogic;
 	private SuperFlu superflu;
 
@@ -38,7 +40,8 @@ public class GameScreen implements Screen {
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		groupZones = new Group();
 		groupVilles = new Group();
-	
+		groupTransferts = new Group();
+		
 		Texture backgroundTexture = superflu.manager.get("images/fond_carte.png", Texture.class);
 		TextureRegion backgroundTextureRegion = new TextureRegion(backgroundTexture, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		Image imgBackground = new Image(backgroundTextureRegion);
@@ -53,6 +56,7 @@ public class GameScreen implements Screen {
 		
 		stage.addActor(groupZones);
 		stage.addActor(groupVilles);
+		stage.addActor(groupTransferts);
 		
 		stage.addActor(TransfertCreator.getInstance());
 	
@@ -195,6 +199,14 @@ public class GameScreen implements Screen {
 
 	public Group getGroupVilles() {
 		return groupVilles;
+	}
+	
+	public void addTransfert(TransfertActor actor) {
+		groupTransferts.addActor(actor);
+	}
+	
+	public void removeTransfert(TransfertActor actor) {
+		groupTransferts.removeActor(actor);
 	}
 	
 }

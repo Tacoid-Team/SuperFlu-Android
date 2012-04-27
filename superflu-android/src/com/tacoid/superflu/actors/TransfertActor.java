@@ -20,6 +20,8 @@ public class TransfertActor extends Actor{
 		this.transfert = transfert;
 		Texture texAvion = superflu.manager.get("images/avion.png", Texture.class);
 		avion = new TextureRegion(texAvion, texAvion.getWidth(), texAvion.getHeight());
+		width = avion.getRegionWidth();
+		height = avion.getRegionHeight();
 	}
 		
 	@Override
@@ -40,10 +42,10 @@ public class TransfertActor extends Actor{
 		float zoom = 0.25f + 0.75f*(float)Math.sin(avancement*Math.PI);
 
 		batch.draw(avion, 
-				  (int)(depart_x*(1 - avancement) + arrivee_x*avancement) % 1024, 
-				   (int)(depart.getY()*(1 - avancement) + arrivee.getY()*avancement),
-				   0,
-				   0,
+				  (int)(depart_x*(1 - avancement) + arrivee_x*avancement) % 1024 - width / 2, 
+				   (int)(depart.getY()*(1 - avancement) + arrivee.getY()*avancement - height / 2),
+				   width/2,
+				   height/2,
 				   avion.getRegionWidth(),
 				   avion.getRegionHeight(),
 				   zoom,

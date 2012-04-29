@@ -6,13 +6,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class HelpScreen implements Screen, InputProcessor {
-
+	private static final int VIRTUAL_WIDTH = 1024;
+	private static final int VIRTUAL_HEIGHT = 576;
 	private static HelpScreen instance = null;
 	private int current = 0;
 	private Texture aide[] = new Texture[4];
 	private SpriteBatch batch;
+	private TextureRegion backgroundTextureRegion;
 
 	private HelpScreen() {
 		SuperFlu superflu = SuperFlu.getInstance();
@@ -21,6 +24,8 @@ public class HelpScreen implements Screen, InputProcessor {
 		aide[2] = superflu.manager.get("images/aide3.png", Texture.class);
 		aide[3] = superflu.manager.get("images/aide4.png", Texture.class);
 		batch = new SpriteBatch();
+		Texture backgroundTexture = superflu.manager.get("images/fond_carte.png", Texture.class);
+		backgroundTextureRegion = new TextureRegion(backgroundTexture, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 	}
 	
 	@Override
@@ -45,6 +50,7 @@ public class HelpScreen implements Screen, InputProcessor {
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		batch.begin();
+		batch.draw(backgroundTextureRegion, 0, 0);
 		batch.draw(aide[current], 0, 0);
 		batch.end();
 	}

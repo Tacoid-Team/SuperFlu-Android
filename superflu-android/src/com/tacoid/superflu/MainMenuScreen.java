@@ -178,10 +178,14 @@ public class MainMenuScreen implements Screen {
 
 		@Override
 		public Actor hit(float x, float y) {
-			// TODO Auto-generated method stub
-			return null;
+			return x >= 0 && x <= width && y >= 0 && y <= height ? this : null;
 		}
 		
+		@Override
+		public boolean touchDown(float x, float y, int pointer) {
+			superflu.setScreen(AboutScreen.getInstance());
+			return true;
+		}
 	}
 	
 	

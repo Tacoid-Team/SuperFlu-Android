@@ -5,7 +5,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
@@ -19,6 +21,25 @@ public class AboutScreen implements Screen, InputProcessor {
 	private Texture credits;
 	private SuperFlu superflu;
 	
+	private class Dna extends Image {
+		
+		private Texture dna[] = new Texture[10];
+		private int c = 0;
+		
+		public Dna() {
+			// TODO Auto-generated method stub
+			for (int i = 1; i <= 10; i++) {
+				dna[i-1] = superflu.manager.get("images/dna" + i +".png", Texture.class);
+			}			
+		}
+		
+		@Override
+		public void draw(SpriteBatch batch, float arg1) {
+			batch.draw(dna[c / 10], 500, -80);
+			c = (c + 1) % 100; //XXX
+		}
+	}
+	
 	private AboutScreen() {
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		superflu = SuperFlu.getInstance();
@@ -31,6 +52,7 @@ public class AboutScreen implements Screen, InputProcessor {
 		stage.addActor(imgBackground);
 		
 		stage.addActor(new Image(credits));
+		stage.addActor(new Dna());
 	}
 	
 	public static AboutScreen getInstance() {

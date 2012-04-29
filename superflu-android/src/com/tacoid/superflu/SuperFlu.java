@@ -44,6 +44,16 @@ public class SuperFlu extends Game {
 		manager.load("images/carte_zone6.png", Texture.class);
 		manager.load("images/carte.png", Texture.class);
 		manager.load("images/credits.png", Texture.class);
+		manager.load("images/dna1.png", Texture.class);
+		manager.load("images/dna2.png", Texture.class);
+		manager.load("images/dna3.png", Texture.class);
+		manager.load("images/dna4.png", Texture.class);
+		manager.load("images/dna5.png", Texture.class);
+		manager.load("images/dna6.png", Texture.class);
+		manager.load("images/dna7.png", Texture.class);
+		manager.load("images/dna8.png", Texture.class);
+		manager.load("images/dna9.png", Texture.class);
+		manager.load("images/dna10.png", Texture.class);
 		manager.load("images/exit.png", Texture.class);
 		manager.load("images/fond_carte.png", Texture.class);
 		manager.load("images/HL_usine.png", Texture.class);

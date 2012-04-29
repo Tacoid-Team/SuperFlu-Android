@@ -42,8 +42,6 @@ public class MainMenuScreen implements Screen {
 		stage.addActor(new ExitActor());
 		stage.addActor(new OptionsActor());
 		stage.addActor(new AboutActor());
-		
-		Gdx.input.setInputProcessor(stage);
 	}
 	
 
@@ -221,13 +219,11 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	public static MainMenuScreen getInstance() {

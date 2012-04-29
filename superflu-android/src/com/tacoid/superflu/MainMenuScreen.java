@@ -143,13 +143,12 @@ public class MainMenuScreen implements Screen {
 			x = 900;
 			y = 40;
 		}
-
-		@Override
-		public Actor hit(float x, float y) {
-			// TODO Auto-generated method stub
-			return null;
-		}
 		
+		@Override
+		public boolean touchDown(float x, float y, int pointer) {
+			Gdx.app.exit();
+			return true;
+		}
 	}
 	
 	private class OptionsActor extends MenuIcon {
@@ -159,13 +158,12 @@ public class MainMenuScreen implements Screen {
 			x = 900;
 			y = 100;
 		}
-
-		@Override
-		public Actor hit(float x, float y) {
-			// TODO Auto-generated method stub
-			return null;
-		}
 		
+		@Override
+		public boolean touchDown(float x, float y, int pointer) {
+			//superflu.setScreen(OptionScreen.getInstance());
+			return true;
+		}
 	}
 	
 	private class AboutActor extends MenuIcon {
@@ -174,11 +172,6 @@ public class MainMenuScreen implements Screen {
 			super("images/about.png", "À propos", 48, 48);
 			x = 900;
 			y = 160;
-		}
-
-		@Override
-		public Actor hit(float x, float y) {
-			return x >= 0 && x <= width && y >= 0 && y <= height ? this : null;
 		}
 		
 		@Override

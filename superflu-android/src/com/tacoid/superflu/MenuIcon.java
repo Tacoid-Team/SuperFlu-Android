@@ -27,7 +27,9 @@ public abstract class MenuIcon extends Actor {
 		font.draw(batch, text, x - 70, y + width / 2 + 6);
 	}
 
+
 	@Override
-	public abstract Actor hit(float x, float y);
-	
+	public Actor hit(float x, float y) {
+		return x >= -70 && x <= width && y >= 0 && y <= height ? this : null;
+	}	
 }

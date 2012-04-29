@@ -9,30 +9,35 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class HelpScreen implements Screen, InputProcessor {
+public class AboutScreen implements Screen, InputProcessor {
 	private static final int VIRTUAL_WIDTH = 1024;
 	private static final int VIRTUAL_HEIGHT = 576;
-	private static HelpScreen instance = null;
+	private static AboutScreen instance = null;
 	
 	private Stage stage;
-	private int current = 0;
-	private Image aide[] = new Image[4];
-	private SuperFlu superflu;
 
-	private HelpScreen() {
+	private Texture credits;
+	private SuperFlu superflu;
+	
+	private AboutScreen() {
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		superflu = SuperFlu.getInstance();
+		credits = superflu.manager.get("images/credits.png", Texture.class);
+		
 		Texture backgroundTexture = superflu.manager.get("images/fond_carte.png", Texture.class);
 		TextureRegion backgroundTextureRegion = new TextureRegion(backgroundTexture, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		Image imgBackground = new Image(backgroundTextureRegion);
 		imgBackground.touchable = false;
 		stage.addActor(imgBackground);
 		
-		aide[0] = new Image(superflu.manager.get("images/aide1.png", Texture.class));
-		aide[1] = new Image(superflu.manager.get("images/aide2.png", Texture.class));
-		aide[2] = new Image(superflu.manager.get("images/aide3.png", Texture.class));
-		aide[3] = new Image(superflu.manager.get("images/aide4.png", Texture.class));
-		stage.addActor(aide[current]);
+		stage.addActor(new Image(credits));
+	}
+	
+	public static AboutScreen getInstance() {
+		if (instance == null) {
+			instance = new AboutScreen();
+		}
+		return instance;
 	}
 	
 	@Override
@@ -61,7 +66,7 @@ public class HelpScreen implements Screen, InputProcessor {
 	}
 
 	@Override
-	public void resize(int arg0, int arg1) {
+	public void resize(int width, int height) {
 		stage.setViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, false);
 		stage.getCamera().position.set(VIRTUAL_WIDTH/2, VIRTUAL_HEIGHT/2, 0);
 	}
@@ -75,13 +80,6 @@ public class HelpScreen implements Screen, InputProcessor {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(this);
-	}
-	
-	public static HelpScreen getInstance() {
-		if (instance == null) {
-			instance  = new HelpScreen();
-		}
-		return instance;
 	}
 
 	@Override
@@ -110,14 +108,7 @@ public class HelpScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int arg0, int arg1, int arg2, int arg3) {
-		stage.removeActor(aide[current]);
-		if (current < 3) {
-			current++;
-		} else {
-			current = 0;
-			SuperFlu.getInstance().setScreen(MainMenuScreen.getInstance());
-		}
-		stage.addActor(aide[current]);
+		SuperFlu.getInstance().setScreen(MainMenuScreen.getInstance());
 		return true;
 	}
 
@@ -135,7 +126,6 @@ public class HelpScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

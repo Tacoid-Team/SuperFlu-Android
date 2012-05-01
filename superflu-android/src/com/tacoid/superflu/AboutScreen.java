@@ -1,10 +1,14 @@
 package com.tacoid.superflu;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -23,20 +27,27 @@ public class AboutScreen implements Screen, InputProcessor {
 	
 	private class Dna extends Image {
 		
-		private Texture dna[] = new Texture[10];
+		private Texture d;
+		private List<TextureRegion> dna = new ArrayList<TextureRegion>();
 		private int c = 0;
+		private Animation animation;
+		private float stateTime;
 		
 		public Dna() {
 			// TODO Auto-generated method stub
 			for (int i = 1; i <= 10; i++) {
-				dna[i-1] = superflu.manager.get("images/dna" + i +".png", Texture.class);
-			}			
+				dna.add(new TextureRegion(superflu.manager.get("images/dna" + i +".png", Texture.class)));
+			}
+			
+			animation = new Animation(0.05f, dna);
+			stateTime = 0f;
 		}
 		
 		@Override
-		public void draw(SpriteBatch batch, float arg1) {
-			batch.draw(dna[c / 10], 500, -80);
-			c = (c + 1) % 100; //XXX
+		public void draw(SpriteBatch batch, float alpha) {
+			stateTime += Gdx.graphics.getDeltaTime();
+			TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
+			batch.draw(currentFrame, 500, -80);
 		}
 	}
 	

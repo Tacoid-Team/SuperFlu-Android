@@ -133,7 +133,7 @@ public class TransfertCreator extends Actor {
 		end_y = y;
 		
 		start_ville = (VilleActor) GameScreen.getInstance().getGroupVilles().hit(start_x, start_y);
-		System.out.println(start_ville.getVille().getStockTraitements());
+		System.out.println(start_ville.getVille());
 	}
 	
 	public void updateTarget(float x, float y) {
@@ -144,7 +144,7 @@ public class TransfertCreator extends Actor {
 		ortho_x = (end_y-start_y)/norm;
 		ortho_y = -(end_x-start_x)/norm;
 		
-		/*XXX: Je compare des références, c'est peut être pas top... */
+		/*XXX: Je compare des rï¿½fï¿½rences, c'est peut ï¿½tre pas top... */
 		if((VilleActor) GameScreen.getInstance().getGroupVilles().hit(end_x, end_y) != start_ville) {
 			dest_ville = (VilleActor) GameScreen.getInstance().getGroupVilles().hit(end_x, end_y);
 		}

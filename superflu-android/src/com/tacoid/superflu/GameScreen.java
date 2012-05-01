@@ -39,7 +39,7 @@ public class GameScreen implements Screen {
 		this.superflu = SuperFlu.getInstance();
 		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		groupZones = new Group();
-		groupVilles = new Group();
+		groupVilles = new GroupVilles();
 		groupTransferts = new Group();
 		
 		Texture backgroundTexture = superflu.manager.get("images/fond_carte.png", Texture.class);

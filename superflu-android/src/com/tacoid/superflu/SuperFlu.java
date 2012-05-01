@@ -1,6 +1,7 @@
 package com.tacoid.superflu;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,6 +23,7 @@ public class SuperFlu extends Game {
 	@Override
 	public void create() {
 		setScreen(LoadingScreen.getInstance());
+		Gdx.input.setCatchBackKey(true);
 		
 		loadAssets();
 	}

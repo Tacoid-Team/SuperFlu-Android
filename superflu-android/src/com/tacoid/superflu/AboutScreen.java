@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -116,8 +117,11 @@ public class AboutScreen implements Screen, InputProcessor {
 	}
 
 	@Override
-	public boolean keyDown(int arg0) {
-		// TODO Auto-generated method stub
+	public boolean keyDown(int key) {
+		if (key == Keys.BACK) {
+			SuperFlu.getInstance().setScreen(MainMenuScreen.getInstance());
+			return true;
+		}
 		return false;
 	}
 

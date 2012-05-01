@@ -1,6 +1,7 @@
 package com.tacoid.superflu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
@@ -85,13 +86,22 @@ public class HelpScreen implements Screen, InputProcessor {
 	}
 
 	@Override
-	public boolean keyDown(int arg0) {
-		// TODO Auto-generated method stub
+	public boolean keyDown(int key) {
+		if (key == Keys.BACK) {
+			stage.removeActor(aide[current]);
+			current--;
+			if (current < 0) {
+				SuperFlu.getInstance().setScreen(MainMenuScreen.getInstance());
+				current = 0;
+			}
+			stage.addActor(aide[current]);
+			return true;
+		}
 		return false;
 	}
 
 	@Override
-	public boolean keyTyped(char arg0) {
+	public boolean keyTyped(char key) {
 		// TODO Auto-generated method stub
 		return false;
 	}

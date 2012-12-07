@@ -5,11 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.tacoid.superflu.LoadingScreen;
 
 public class SuperFlu extends Game {
 
 	private static SuperFlu instance = null;
 	public AssetManager manager;
+	private LoadingScreen loadingScreen;
+	private boolean loaded;
 	
 	private SuperFlu() {}
 	
@@ -21,8 +24,22 @@ public class SuperFlu extends Game {
 	}
 	
 	@Override
+	public void render() {
+		if (manager.update()) {
+			if (!loaded) {
+				getScreen().show();
+			}
+		} else {
+			if (loadingScreen != null) loadingScreen.render(Gdx.graphics.getDeltaTime());
+			loaded = false;
+		}
+		super.render();
+	}
+	
+	@Override
 	public void create() {
-		setScreen(LoadingScreen.getInstance());
+		loadingScreen = LoadingScreen.getInstance(); 
+		setScreen(loadingScreen);
 		Gdx.input.setCatchBackKey(true);
 		
 		loadAssets();

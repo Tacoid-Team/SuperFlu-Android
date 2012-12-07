@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.locks.ReentrantLock;
 
 import com.tacoid.superflu.entities.Carte;
 import com.tacoid.superflu.entities.Transfert;

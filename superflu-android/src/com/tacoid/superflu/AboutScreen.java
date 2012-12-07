@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
@@ -28,9 +27,7 @@ public class AboutScreen implements Screen, InputProcessor {
 	
 	private class Dna extends Image {
 		
-		private Texture d;
 		private List<TextureRegion> dna = new ArrayList<TextureRegion>();
-		private int c = 0;
 		private Animation animation;
 		private float stateTime;
 		
